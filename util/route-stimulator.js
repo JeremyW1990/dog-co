@@ -13,7 +13,7 @@ for (let i = 1; i < 100; i++) {
 
 
 const fs = require('fs');
-fs.writeFile('files/dummy-geolocation-sql-dump.txt', query, (err) => {
+fs.writeFile('files/dummy-geolocation-dummy-data.txt', query, (err) => {
     if (err) throw err;
-    console.log('dummy-geolocation-sql-query.txt created.');
+    console.log('files/dummy-geolocation-dummy-data.txt created.');
   });
