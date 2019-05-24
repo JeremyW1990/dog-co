@@ -1,7 +1,5 @@
 const Route = require('../models/route');
 
-
-
 exports.getRoutes = (req, res, next) => {
     console.log("Hit getRoutes");
     Route.fetchAll()

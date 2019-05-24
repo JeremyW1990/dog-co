@@ -11,7 +11,7 @@ module.exports = class Product {
 
   save() {
     return db.execute(
-      'INSERT INTO geo-locations (longitude, price, latitude, route_id, create_at) VALUES (?, ?, ?, ?)',
+      'INSERT INTO `geo_locations` (longitude, price, latitude, route_id, create_at) VALUES (?, ?, ?, ?)',
       [this.longitude, this.price, this.latitude, this.route_id, this.create_at]
     );
   }
@@ -19,10 +19,10 @@ module.exports = class Product {
   static deleteById(id) {}
 
   static fetchAll() {
-    return db.execute('SELECT * FROM geo-locations');
+    return db.execute('SELECT * FROM `geo_locations`');
   }
 
   static findById(id) {
-    return db.execute('SELECT * FROM geo-locations WHERE geo-locations.id = ?', [id]);
+    return db.execute('SELECT * FROM geo-locations WHERE geo_locations.id = ?', [id]);
   }
 };
