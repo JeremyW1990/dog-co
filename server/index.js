@@ -14,20 +14,20 @@ app.use('/api', dogRoutes);
 
 User.hasMany(Dog);
 Dog.belongsTo(User);
-User.create({ name: "Jeremy", email: 'cjwang1990@hotmail.com'})
-.then( res => {
-  console.log( "create user: ", res )
-})
+
+
 sequelize
 // .sync({ force: true })
 .sync()
   .then( result => {
-console.log("echo User", User);
-    return User.findById(1)
+    return User.findByPk(1)
   })
   .then(user => {
     if (!user) {
       return User.create({ name: "Jeremy", email: 'cjwang1990@hotmail.com'})
+    } 
+    else {
+      console.log('Find a user with ID 1')
     }
   })
   .then( result => {

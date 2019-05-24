@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Route from './route'
 
 
 class App extends React.Component {
@@ -16,7 +17,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        Dog-CO
+        <Route/>
       </div>
     );
   }
