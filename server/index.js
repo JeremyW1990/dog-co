@@ -15,8 +15,8 @@ app.use((req, res, next) => {
 });
 
 
-app.use(routeRoutes);
-app.use(geoLocationRoutes);
+app.use('/api', routeRoutes);
+app.use('/api', geoLocationRoutes);
 
 
 app.listen(3001, () => {
