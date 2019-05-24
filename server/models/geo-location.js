@@ -1,22 +1,28 @@
-const Sequelize = require('Sequelize');
+const db = require('../../database/mysql.config');
 
-const sequelize = require('../../database/mysql.config');
-
-const User = sequelize.define('geo-location', {
-  id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true
-  },
-  longitude: Sequelize.INTEGER,
-  latitude: Sequelize.INTEGER,
-  create_at: Sequelize.DATE,
-  route_id : {
-    type: Sequelize.INTEGER,
-    references: 'users', // <<< Note, its table's name, not object name
-    referencesKey: 'id' // <<< Note, its a column name    
+module.exports = class Product {
+  constructor(id, longitude, latitude, route_id, create_at) {
+    this.id = id;
+    this.longitude = longitude;
+    this.latitude = latitude;
+    this.route_id = route_id;
+    this.create_at = create_at;
   }
-});
 
-module.exports = User;
+  save() {
+    return db.execute(
+      'INSERT INTO geo-locations (longitude, price, latitude, route_id, create_at) VALUES (?, ?, ?, ?)',
+      [this.longitude, this.price, this.latitude, this.route_id, this.create_at]
+    );
+  }
+
+  static deleteById(id) {}
+
+  static fetchAll() {
+    return db.execute('SELECT * FROM geo-locations');
+  }
+
+  static findById(id) {
+    return db.execute('SELECT * FROM geo-locations WHERE geo-locations.id = ?', [id]);
+  }
+};
