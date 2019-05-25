@@ -1,7 +1,6 @@
 import React from 'react';
 
 import MapContainer from './map-container';
-// import styles from '../css/route.css';
 import '../css/route.css'
 
 
@@ -23,8 +22,12 @@ class Route extends React.Component {
       console.log(res);
       return res.json();
     })
-    .then( geoLocationStream => {
-      
+    .then( res => {
+      const geoLocationStream = 
+      res.map( geo => {
+        return {lat: geo.longitude / Math.pow(10, 7) , lng: geo.latitude / Math.pow(10, 7) }
+      });
+      this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)})
   
     })
   }
@@ -33,7 +36,7 @@ class Route extends React.Component {
     return (
       <div className="route">
         <div className="map">
-          <MapContainer/>
+          <MapContainer geoLocationStream={this.state.geoLocationStream} />
         </div>
       </div>
     );
