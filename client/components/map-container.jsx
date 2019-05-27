@@ -1,22 +1,31 @@
 import React from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, GoogleApiWrapper , Polyline, Marker, Polygon} from 'google-maps-react';
 
 export class MapContainer extends React.Component {
+
+  
   render() {
-    return (
-      <Map google={this.props.google} zoom={14}>
 
-        <Marker onClick={this.onMarkerClick}
-                name={'Current location'} />
-
-        <InfoWindow onClose={this.onInfoWindowClose}>
-            <div>
-              <h1>selectedPlace name</h1>
-            </div>
-        </InfoWindow>
+    console.log(this.props.geoLocationStream)
+    const coords = {lat: 33.635094, lng: -117.740171};
+    const path = [...this.props.geoLocationStream] ;
+    return(
+      <Map 
+          initialCenter={coords}
+          google={this.props.google}
+          style={{width: '100%', height: '100%', position: 'relative'}}
+          className={'map'}
+          zoom={14}>
+          <Polyline
+            path={this.props.geoLocationStream}
+            strokeColor="#0000FF"
+            strokeOpacity={0.8}
+            strokeWeight={2} />
       </Map>
-    );
+    )
   }
+
+      
 }
 
 export default GoogleApiWrapper({
