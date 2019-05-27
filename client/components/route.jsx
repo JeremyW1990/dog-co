@@ -25,7 +25,7 @@ class Route extends React.Component {
     .then( res => {
       const geoLocationStream = 
       res.map( geo => {
-        return {lat: geo.longitude / Math.pow(10, 7) , lng: geo.latitude / Math.pow(10, 7) }
+        return {lat: geo.latitude / Math.pow(10, 7) , lng: geo.longitude / Math.pow(10, 7) }
       });
       this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)})
   
