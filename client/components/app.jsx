@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Route from './route'
+import LiveMap from './live-map'
 
 
 class App extends React.Component {
@@ -15,7 +16,8 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route/>
+        {/* <Route/> */}
+        <LiveMap/>
       </div>
     );
   }
