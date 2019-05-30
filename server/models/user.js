@@ -1,6 +1,6 @@
 const db = require('../../database/mysql.config');
 
-module.exports = class Product {
+module.exports = class User {
   constructor(id, name, email, password) {
     this.id = id;
     this.name = name;

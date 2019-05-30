@@ -17,9 +17,31 @@ class LiveMap extends React.Component {
         if (this.props.coords) 
             if (!prevProps.coords || 
                 (this.props.coords.latitude !== prevProps.coords.latitude || this.props.coords.longitude !== prevProps.coords.longitude)){
-                this.setState({ 
-                    geoLocationStream : this.state.geoLocationStream.concat({ lat: this.props.coords.latitude, lng: this.props.coords.longitude })
-                }, ()=>{console.log(" State changed: ", this.state.geoLocationStream)});
+                    const longitude = Math.floor(this.props.coords.longitude * Math.pow(10, 7));
+                    const latitude = Math.floor(this.props.coords.latitude * Math.pow(10, 7));
+                    const data = {
+                        longitude,
+                        latitude,
+                        route_id : 2,
+                    };
+                    fetch('/api/geo-locations', {
+                        method: 'POST',
+                        body: JSON.stringify(data),
+                        headers:{
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then( res => {
+                        return res.json();
+                    })
+                    .then( res => {
+                        const geoLocationStream = this.state.geoLocationStream.concat({ lat: this.props.coords.latitude, lng: this.props.coords.longitude })
+                        this.setState({ geoLocationStream }
+                        , ()=>{console.log(" State changed: ", this.state.geoLocationStream)});
+    
+                    
+                    })
+
         }   
     }
 
@@ -49,7 +71,7 @@ class LiveMap extends React.Component {
  
 export default geolocated({
     positionOptions: {
-        enableHighAccuracy: false,
+        enableHighAccuracy: true,
     },
     watchPosition: true,
 })(LiveMap);
