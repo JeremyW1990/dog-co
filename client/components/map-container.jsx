@@ -7,9 +7,8 @@ export class MapContainer extends React.Component {
   render() {
 
     
-    console.log(this.props.geoLocationStream)
+    console.log("Map-container, Path to be drawed: " , this.props.geoLocationStream);
     const coords = {lat: 33.635094, lng: -117.740171};
-    const path = [...this.props.geoLocationStream] ;
 
     return(
       <Map 

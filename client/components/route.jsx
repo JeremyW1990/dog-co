@@ -1,5 +1,5 @@
 import React from 'react';
-
+import openSocket from 'socket.io-client';
 import MapContainer from './map-container';
 import '../css/route.css'
 
@@ -27,9 +27,15 @@ class Route extends React.Component {
       res.map( geo => {
         return {lat: geo.latitude / Math.pow(10, 7) , lng: geo.longitude / Math.pow(10, 7) }
       });
+      this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)});
+    });
+
+    const socket = openSocket('http://localhost:3001');
+    socket.on('mySQL', data => {
+      console.log("Socket Client received");
+      let geoLocationStream = this.state.geoLocationStream.concat({lat: data.latitude / Math.pow(10, 7) , lng: data.longitude / Math.pow(10, 7) });
       this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)})
-  
-    })
+    });
   }
 
   render() {
