@@ -4,6 +4,8 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import HomePage from './home-page'
 import LandingPage from './landing-page'
 import AuthContext from '../auth-context.js'
+import LiveDisplay from './route'
+import LiveMap from './live-map'
 
 
 class App extends React.Component {
@@ -32,6 +34,10 @@ class App extends React.Component {
 
           <Switch>
             <Route path="/home" component={HomePage}></Route>
+            {this.state.user_id === 1 ? 
+              <Route path="/live-walking" component={LiveDisplay}></Route> :
+              <Route path="/live-walking" component={LiveMap}></Route>
+            }
             <Route path="/" component={LandingPage}></Route>
           </Switch>
         </div>
