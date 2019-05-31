@@ -13,6 +13,10 @@ const geoLocationRoutes = require('./routes/geo-location');
 app.use('/api', routeRoutes);
 app.use('/api', geoLocationRoutes);
 
+app.get('*', (req, res) => {
+  res.sendFile('public/index.html');
+});
+
 const server = app.listen(3001, () => {
   console.log("Server is listening at prot 3001");
 });
