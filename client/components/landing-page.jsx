@@ -1,4 +1,8 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom'
+
+import AuthContext from '../auth-context.js'
+
 
 class LandingPage extends React.Component {
 
@@ -9,42 +13,35 @@ class LandingPage extends React.Component {
     };
   }
 
+  static contextType = AuthContext;
+
   render() {
     return (
         <div className="landing-page">
-            <div className="button">
-                <button>
-                    <i className="fas fa-user-friends"></i>
-                </button>
-                other's pending request 
-            </div>
-
-            <div className="button">
-                <button>
-                    <i className="fas fa-route"></i>
-                </button>
-                my pending request 
-            </div>
-            <div className="button">
-                <button>
-                    <i className="fas fa-folder-open"></i>
-                </button>
-                History walk
-            </div>
-            <div className="button">
-                <button>
-                    <i className="fas fa-user-cog"></i>
-                </button>
-                Edit user
-
-            </div>
-            <div className="button">
-                <button>
-                    <i className="fas fa-dog"></i>
-                </button>
-                Edit my dog
-            </div>
+            Landing-Page
             
+            <AuthContext.Consumer>{()=> (
+                <div className="user-choice">
+                    <NavLink
+                        to={{
+                        pathname: '/home',
+                        search: "?user_id=1"
+                        }}
+                        exact>
+                        <button className="jeremy" onClick={()=> this.context.login(1)}>Jeremy</button>
+                    </NavLink>
+
+                    <NavLink
+                        to={{
+                        pathname: '/home',
+                        search: "?user_id=2"
+                        }}
+                        exact>
+                        <button className="howard" onClick={()=> this.context.login(2)}>Howard</button>
+                    </NavLink>
+                </div>
+            )}
+            </AuthContext.Consumer>
 
         </div>
     )}
