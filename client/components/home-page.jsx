@@ -17,6 +17,15 @@ class HomePage extends React.Component {
                 <button>Back to login</button>
             </NavLink>
 
+            <NavLink to='/live-walking'>
+                <div className="button">
+                    <button>
+                        <i className="fas fas fa-road"></i>
+                    </button>
+                    LIVE WALKING
+                </div>
+            </NavLink>
+
             <div className="button">
                 <button>
                     <i className="fas fa-user-friends"></i>
