@@ -1,5 +1,6 @@
 import React from 'react';
 
+import LandingPage from './landing-page'
 import Route from './route'
 import LiveMap from './live-map'
 
@@ -16,8 +17,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <button onClick={()=>{this.setState({userType: 'Walker'})}}>Walker Screen</button>
-        <button onClick={()=>{this.setState({userType: 'Owner'})}}>Owner Screen</button>
+        <LandingPage/>
+        {/* <button onClick={()=>{this.setState({userType: 'Walker'})}}>Walker Screen</button>
+        <button onClick={()=>{this.setState({userType: 'Owner'})}}>Owner Screen</button> */}
         {this.state.userType ==='Walker' ? <LiveMap/> : null}
         {this.state.userType ==='Owner' ? <Route/> : null}
       </div>
