@@ -1,7 +1,9 @@
 import React from 'react';
+import {BrowserRouter, Switch, Route} from 'react-router-dom'
 
-import Route from './route'
-import LiveMap from './live-map'
+import HomePage from './home-page'
+import LandingPage from './landing-page'
+import AuthContext from '../auth-context.js'
 
 
 class App extends React.Component {
@@ -9,7 +11,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userType : null,
       user_id : null
     };
     this.login = this.login.bind(this);
@@ -21,16 +22,23 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="app">
-        {/* <LandingPage/> */}
-        {/* <button onClick={()=>{this.setState({userType: 'Walker'})}}>Walker Screen</button>
-        <button onClick={()=>{this.setState({userType: 'Owner'})}}>Owner Screen</button> */}
-        {this.state.userType ==='Walker' ? <LiveMap/> : null}
-        {this.state.userType ==='Owner' ? <Route/> : null}
-        <button className="jeremy" onClick={()=> this.login(1)}>Jeremy</button>
-        <button className="howard" onClick={()=> this.login(2)}>Howard</button>
-        
-      </div>
+      <BrowserRouter>
+      <AuthContext.Provider value={{
+          user_id: this.state.user_id,
+          login: this.login
+        }}>
+        <div className="app">
+          ROOT PAGE
+
+          <Switch>
+            <Route path="/home" component={HomePage}></Route>
+            <Route path="/" component={LandingPage}></Route>
+          </Switch>
+        </div>
+
+      </AuthContext.Provider>
+      </BrowserRouter>
+
     );
   }
 }
