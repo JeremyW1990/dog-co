@@ -40,6 +40,7 @@ module.exports = {
     contentBase: publicPath,
     watchContentBase: true,
     stats: 'minimal',
+    historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:3001'
     }
