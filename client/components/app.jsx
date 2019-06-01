@@ -24,7 +24,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter basename='/dog-co'>
+      <BrowserRouter>
       <AuthContext.Provider value={{
           user_id: this.state.user_id,
           login: this.login
