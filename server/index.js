@@ -14,7 +14,8 @@ app.use('/api', routeRoutes);
 app.use('/api', geoLocationRoutes);
 
 app.get('*', (req, res) => {
-  res.sendFile('public/index.html');
+  console.log("__dirname:" , __dirname);
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 const server = app.listen(3001, () => {
