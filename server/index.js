@@ -5,7 +5,7 @@ const db = require('../database/mysql.config');
 const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const routeRoutes = require('./routes/route');
 const geoLocationRoutes = require('./routes/geo-location');
