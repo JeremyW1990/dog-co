@@ -1,7 +1,7 @@
 const db = require('../../database/mysql.config');
 
 module.exports = class Route {
-  constructor(id, beneficiary_id, provider_id, status, user_id) {
+  constructor(id, beneficiary_id, provider_id, status) {
     this.id = id;
     this.beneficiary_id = beneficiary_id;
     this.provider_id = provider_id;
@@ -17,8 +17,8 @@ module.exports = class Route {
 
   static deleteById(id) {}
 
-  static fetchAll() {
-    return db.execute('SELECT * FROM routes');
+  static fetchAllByUserId(user_id) {
+    return db.execute('SELECT * FROM routes WHERE beneficiary_id = ?', [user_id]);
   }
 
   static findById(id) {

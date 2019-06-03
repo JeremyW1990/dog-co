@@ -33,12 +33,15 @@ class HomePage extends React.Component {
                 other's pending request 
             </div>
 
-            <div className="button">
-                <button>
-                    <i className="fas fa-route"></i>
-                </button>
-                my pending request 
-            </div>
+            <NavLink to='/user-requests'>
+                <div className="button">
+                    <button>
+                        <i className="fas fa-route"></i>
+                    </button>
+                    my request 
+                </div>
+            </NavLink>
+            
             <div className="button">
                 <button>
                     <i className="fas fa-folder-open"></i>
