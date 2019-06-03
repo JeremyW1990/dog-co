@@ -8,17 +8,16 @@ class UserRequests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      routes: [],
     };
   }
 
   static contextType = AuthContext;
   componentDidMount(){
-      fetch('/api/routes/' + this.context.user_id,{
+      fetch('/api/routes/' + this.context.user_id, {
         method: 'GET',
       })
       .then( res => {
-        console.log(res);
-
         return res.json();
       })
       .then( res => {
