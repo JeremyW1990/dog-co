@@ -41,6 +41,16 @@ class HomePage extends React.Component {
                     my request 
                 </div>
             </NavLink>
+
+            <NavLink to='/new-request'>
+                <div className="button">
+                    <button>
+                        <i className="fas fa-plus"></i>
+                    </button>
+                    New Request
+                </div>
+            </NavLink>
+
             
             <div className="button">
                 <button>
