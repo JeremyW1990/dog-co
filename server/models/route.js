@@ -3,17 +3,18 @@ const db = require('../../database/mysql.config');
 
 module.exports = class Route {
 
-  constructor(id, beneficiary_id, provider_id, status) {
+  constructor(id, beneficiary_id, provider_id, status, plan_walk_at) {
     this.id = id;
     this.beneficiary_id = beneficiary_id;
     this.provider_id = provider_id;
     this.status = status;
+    this.plan_walk_at = plan_walk_at;
   }
 
   save() {
     return db.execute(
-      'INSERT INTO routes (beneficiary_id, provider_id, status) VALUES (?, ?, ?)',
-      [this.beneficiary_id, this.provider_id, this.status]
+      'INSERT INTO routes (beneficiary_id, provider_id, status, plan_walk_at) VALUES (?, ?, ?, ?)',
+      [this.beneficiary_id, this.provider_id, this.status, this.plan_walk_at]
     );
   }
 

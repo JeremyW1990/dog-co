@@ -9,13 +9,26 @@ exports.getRoutes = (req, res, next) => {
     console.log(query.request); 
     Route.fetchAllByRequestType(req.params.user_id, query.request)
       .then( ([rows,fields]) => {
-        console.log(rows);
         res.send(rows);
       })
       .catch( err => {
         console.log(err);
-      });
-
+    });
 };
 
+exports.createRoute = (req, res, next) => {
+  console.log("Hit create Routes, with user_id", req.params.user_id);
+  console.log("req body:", req.body);
+  const route = new Route (null, req.params.user_id, null, 'pairing', req.body['plan_walk_at'])
+  route.save()
+  .then((result) => {
+    console.log("new route create at mySQL");
+    // io.getIO().emit('mySQL', {
+    //   latitude,
+    //   longitude
+    // });
+    res.send(result);
+  })
+  .catch(err => console.log("createRoute controller error:" , err));
+};
 
