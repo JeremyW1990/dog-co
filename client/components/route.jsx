@@ -30,7 +30,8 @@ class Route extends React.Component {
       this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)});
     });
 
-    const socket = openSocket('');
+
+    const socket = openSocket();
     socket.on('mySQL', data => {
       console.log("Socket Client received");
       let geoLocationStream = this.state.geoLocationStream.concat({lat: data.latitude / Math.pow(10, 7) , lng: data.longitude / Math.pow(10, 7) });
