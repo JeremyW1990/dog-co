@@ -6,7 +6,8 @@ import LandingPage from './landing-page'
 import AuthContext from '../auth-context.js'
 import LiveDisplay from './route'
 import LiveMap from './live-map'
-import UserRequests  from './user-requests'
+import UserRequests from './user-requests'
+import RequestForm from './request-form'
 
 
 class App extends React.Component {
@@ -40,6 +41,8 @@ class App extends React.Component {
               <Route path="/live-walking" component={LiveMap}></Route>
             }
             <Route path='/user-requests' component={UserRequests}></Route>
+            <Route path='/new-request' component={RequestForm}></Route>
+            
 
             <Route path="/" component={LandingPage}></Route>
           </Switch>
