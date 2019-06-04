@@ -2,6 +2,8 @@
 import React from 'react';
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 
+import AuthContext from '../auth-context'
+
 export default class RequestForm extends React.Component {
 
     constructor(props){
@@ -14,6 +16,9 @@ export default class RequestForm extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+
+    static contextType = AuthContext;
 
     handleInputChange(event) {
         const target = event.target;
@@ -28,6 +33,23 @@ export default class RequestForm extends React.Component {
     handleSubmit(event) {
         console.log('The form value is' ,this.state);
         event.preventDefault();
+
+        const postData = {
+            plan_walk_at: this.state.date + ' ' + this.state.time,
+        }
+        fetch(`/api/routes/${this.context.user_id}`, {
+            method: 'POST',
+            body: JSON.stringify(postData),
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        .then( res => {
+            return res.json();
+          })
+        .then( res => {
+        });
+
     }
 
 
