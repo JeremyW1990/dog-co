@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: 2019-05-26 21:30:03
+-- Generation Time: 2019-06-04 12:35:49
 -- 服务器版本： 5.7.26-0ubuntu0.18.04.1
 -- PHP Version: 7.2.17-0ubuntu0.18.04.1
 
@@ -61,13 +61,20 @@ CREATE TABLE `geo_locations` (
 --
 
 INSERT INTO `geo_locations` (`id`, `longitude`, `latitude`, `route_id`, `create_at`) VALUES
-(1, -1177401722, 336350937, 1, '2019-05-26 20:28:29'),
-(2, -1177368000, 336368956, 1, '2019-05-26 20:28:30'),
-(3, -1177352383, 336370750, 1, '2019-05-26 20:28:32'),
-(4, -1177389065, 336325518, 1, '2019-05-26 20:28:35'),
-(5, -1177423881, 336306705, 1, '2019-05-26 20:28:39'),
-(6, -1177418509, 336337034, 1, '2019-05-26 20:28:44'),
-(7, -1177401722, 336350937, 1, '2019-05-26 20:28:54');
+(1, -1177401722, 336350937, 5, '2019-05-26 20:28:29'),
+(2, -1177368000, 336368956, 5, '2019-05-26 20:28:30'),
+(3, -1177352383, 336370750, 5, '2019-05-26 20:28:32'),
+(4, -1177389065, 336325518, 5, '2019-05-26 20:28:35'),
+(5, -1177423881, 336306705, 5, '2019-05-26 20:28:39'),
+(6, -1177418509, 336337034, 5, '2019-05-26 20:28:44'),
+(7, -1177401722, 336350937, 5, '2019-05-26 20:28:54'),
+(17, -1177490541, 336445952, 2, '2019-06-03 14:14:47'),
+(18, -1177403485, 336349113, 2, '2019-06-03 14:22:28'),
+(19, -1177401710, 336350940, 2, '2019-06-03 14:22:53'),
+(20, -1177405710, 336300940, 2, '2019-06-03 14:22:56'),
+(21, -1177491000, 336391020, 2, '2019-06-03 14:23:06'),
+(22, -1177401710, 336350940, 2, '2019-06-03 14:23:11'),
+(23, -1177403485, 336349113, 2, '2019-06-03 14:23:32');
 
 -- --------------------------------------------------------
 
@@ -76,18 +83,25 @@ INSERT INTO `geo_locations` (`id`, `longitude`, `latitude`, `route_id`, `create_
 --
 
 CREATE TABLE `routes` (
-  `id` int(11) NOT NULL,
-  `beneficiary_id` mediumint(9) NOT NULL,
-  `provider_id` mediumint(9) NOT NULL,
-  `status` enum('planned','ongoing','completed','') COLLATE utf8_unicode_ci NOT NULL
+  `id` int(11) UNSIGNED NOT NULL,
+  `beneficiary_id` mediumint(9) DEFAULT NULL,
+  `provider_id` mediumint(9) UNSIGNED DEFAULT NULL,
+  `status` enum('pairing','ongoing','completed','paired') COLLATE utf8_unicode_ci NOT NULL,
+  `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `start_at` datetime DEFAULT NULL,
+  `complete_at` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- 转存表中的数据 `routes`
 --
 
-INSERT INTO `routes` (`id`, `beneficiary_id`, `provider_id`, `status`) VALUES
-(1, 2, 1, 'completed');
+INSERT INTO `routes` (`id`, `beneficiary_id`, `provider_id`, `status`, `create_at`, `start_at`, `complete_at`) VALUES
+(1, 1, NULL, 'pairing', '2019-06-03 18:05:03', NULL, NULL),
+(2, 1, 2, 'paired', '2019-06-03 18:05:03', NULL, NULL),
+(3, 2, NULL, 'pairing', '2019-06-03 18:05:03', NULL, NULL),
+(4, 2, 1, 'paired', '2019-06-03 18:05:03', NULL, NULL),
+(5, 1, 2, 'completed', '2019-06-03 18:05:03', '2019-06-03 18:05:10', '2019-06-03 18:06:04');
 
 -- --------------------------------------------------------
 
@@ -157,12 +171,12 @@ ALTER TABLE `dogs`
 -- 使用表AUTO_INCREMENT `geo_locations`
 --
 ALTER TABLE `geo_locations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- 使用表AUTO_INCREMENT `routes`
 --
 ALTER TABLE `routes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- 使用表AUTO_INCREMENT `users`
 --
@@ -182,8 +196,7 @@ ALTER TABLE `dogs`
 -- 限制表 `routes`
 --
 ALTER TABLE `routes`
-  ADD CONSTRAINT `Route_fk0` FOREIGN KEY (`beneficiary_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `Route_fk1` FOREIGN KEY (`provider_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `Route_fk0` FOREIGN KEY (`beneficiary_id`) REFERENCES `users` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

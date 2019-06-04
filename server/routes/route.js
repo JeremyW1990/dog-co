@@ -4,6 +4,6 @@ const routeController = require('../controllers/route');
 
 const router = express.Router();
 
-router.get('/routes', routeController.getRoutes);
+router.get('/routes/:user_id', routeController.getRoutes);
 
 module.exports = router;

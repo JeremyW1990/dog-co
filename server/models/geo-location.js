@@ -15,7 +15,7 @@ module.exports = class GeoLocation {
     console.log("GeoLocation model save method : this.longitude, this.latitude, this.route_id" , this.longitude, this.latitude, this.route_id);
     return db.execute(
       'INSERT INTO `geo_locations` (longitude, latitude, route_id) VALUES (?, ?, ?)',
-      [this.longitude, this.latitude, this.route_id]
+      [this.longitude, this.latitude, 2]
     );
   }
 
