@@ -14,7 +14,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_id : null
+      user_id : 1
     };
     this.login = this.login.bind(this);
   }
