@@ -1,6 +1,7 @@
 import React from 'react';
 
 import AuthContext from '../auth-context'
+import ConfirmModal from '../functions/confirm-modal'
 
 
 class PairingRequest extends React.Component {
@@ -9,10 +10,41 @@ class PairingRequest extends React.Component {
     super(props);
     this.state = {
       routes: [],
+      showModal: false,
+      pickedRouteId : null
     };
+    this.chooseAWalkPlan = this.chooseAWalkPlan.bind(this);
+    this.cancelConfirm = this.cancelConfirm.bind(this);
+    this.confirmAWalkPlan = this.confirmAWalkPlan.bind(this);
   }
 
   static contextType = AuthContext;
+
+  chooseAWalkPlan(route_id){
+    this.setState({
+      showModal : true,
+      pickedRouteId : route_id
+    })
+  }
+
+  cancelConfirm(){
+    this.setState({
+      showModal : false,
+      pickedRouteId : null,
+      
+    })
+    console.log('cancel');
+
+  }
+
+  confirmAWalkPlan(){
+    this.setState({
+      showModal : false,
+      pickedRouteId : null,
+
+    })
+    console.log('confirmed, update to Database with route_id and user_id: ', this.state.pickedRouteId, this.context.user_id);
+  }
 
   componentDidMount(prevProps, prevState){
     fetch(`/api/available-pairing-route-for-user/${this.context.user_id}` ,{
@@ -32,22 +64,23 @@ class PairingRequest extends React.Component {
     if (this.state.routes.length > 0) {
       routesElements = this.state.routes.map(route => {
         return (
-          <div className="route-item" key={route.id}>
-            <div>
-                Owner: {route['username']}
+            <div className="route-item" key={route.id}>
+              <div>
+                  Owner: {route['username']}
+              </div>
+              <div>
+                Plan Walk Time: {route['plan_walk_at']}
+              </div>
+              <button onClick={()=>this.chooseAWalkPlan(route.id)}>Walk This</button>            
             </div>
-            <div>
-              Plan Walk Time: {route['plan_walk_at']}
-            </div>
-          </div>
         )
       })
     }
     return (
-
-        <div className="pairing-requests">
-            {routesElements}
-        </div>
+      <div className="pairing-requests">
+          {routesElements}
+          <ConfirmModal confirm={this.confirmAWalkPlan} cancel={this.cancelConfirm} showModal={this.state.showModal}/>  
+      </div>
 
 
     );
