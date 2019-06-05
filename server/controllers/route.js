@@ -32,3 +32,17 @@ exports.createRoute = (req, res, next) => {
   .catch(err => console.log("createRoute controller error:" , err));
 };
 
+
+exports.getAvailableParingRoutesForCurrentUser = (req, res, next) => {
+  console.log("Hit getAvailableParingRoutesForCurrentUser, with user_id", req.params.user_id);
+
+  Route.getAvailableParingRoutesForCurrentUser(req.params.user_id)
+    .then( ([rows,fields]) => {
+      console.log(rows);
+      res.send(rows);
+    })
+    .catch( err => {
+      console.log(err);
+  });
+};
+

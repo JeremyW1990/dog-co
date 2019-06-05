@@ -38,4 +38,15 @@ module.exports = class Route {
       WHERE ( beneficiary_id = ? AND status !='completed')`, [user_id]);
     };
   }
+
+  static getAvailableParingRoutesForCurrentUser(user_id) {
+    return db.execute(`SELECT R.id, U.username, plan_walk_at 
+    FROM routes AS R
+    JOIN  users AS U
+    ON beneficiary_id = U.id
+    WHERE (beneficiary_id != ? AND provider_id IS NULL)`, [user_id]);
+  };
+
+  
+
 };
