@@ -8,6 +8,7 @@ import LiveDisplay from './route'
 import LiveMap from './live-map'
 import UserRequests from './user-requests'
 import RequestForm from './request-form'
+import PairingRequests from './pairing-requests'
 
 
 class App extends React.Component {
@@ -43,7 +44,7 @@ class App extends React.Component {
             <Route path='/user-requests' component={UserRequests}></Route>
             <Route path='/new-request' component={RequestForm}></Route>
             
-
+            <Route path='/walk-plan-pool' component={PairingRequests}></Route>
             <Route path="/" component={LandingPage}></Route>
           </Switch>
         </div>

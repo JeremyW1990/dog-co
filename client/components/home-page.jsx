@@ -26,12 +26,15 @@ class HomePage extends React.Component {
                 </div>
             </NavLink>
 
-            <div className="button">
-                <button>
-                    <i className="fas fa-user-friends"></i>
-                </button>
-                other's pending request 
-            </div>
+            <NavLink to='/walk-plan-pool'>
+                <div className="button">
+                    <button>
+                        <i className="fas fa-user-friends"></i>
+                    </button>
+                    Walk-Plan Pool
+                </div>
+            </NavLink>
+
 
             <NavLink to='/user-requests'>
                 <div className="button">
