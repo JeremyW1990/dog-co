@@ -40,13 +40,17 @@ module.exports = class Route {
   }
 
   static getAvailableParingRoutesForCurrentUser(user_id) {
-    return db.execute(`SELECT R.id, U.username, plan_walk_at 
+    return db.execute(`SELECT R.id, U.username, status, plan_walk_at 
     FROM routes AS R
     JOIN  users AS U
     ON beneficiary_id = U.id
     WHERE (beneficiary_id != ? AND provider_id IS NULL)`, [user_id]);
   };
 
+  static findRouteByIdAndUpdateWithStatus(route_id, provider_id, status){
+    console.log(route_id, status);
+    return db.execute(`UPDATE routes SET provider_id =?, status = ? WHERE id = ?`, [provider_id, status, route_id]);
+  }
   
 
 };

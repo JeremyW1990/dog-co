@@ -45,4 +45,19 @@ exports.getAvailableParingRoutesForCurrentUser = (req, res, next) => {
       console.log(err);
   });
 };
+exports.findRouteByIdAndUpdateWithStatus = (req, res, next) => {
+  console.log("Hit findRouteByIdAndUpdateWithStatus, with user_id", req.params.user_id);
+  // { route_id: 3, status: 'paired' }
+
+  Route.findRouteByIdAndUpdateWithStatus(req.body['route_id'], req.params.user_id,req.body['status'])
+    .then( ([rows,fields]) => {
+      console.log(rows);
+      res.send(rows);
+    })
+    .catch( err => {
+      console.log(err);
+  });
+
+}
+
 

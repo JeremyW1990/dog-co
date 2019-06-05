@@ -1,4 +1,6 @@
 import React from 'react';
+import { Badge } from 'reactstrap';
+
 
 import AuthContext from '../auth-context'
 import ConfirmModal from '../functions/confirm-modal'
@@ -38,12 +40,36 @@ class PairingRequest extends React.Component {
   }
 
   confirmAWalkPlan(){
-    this.setState({
-      showModal : false,
-      pickedRouteId : null,
 
-    })
     console.log('confirmed, update to Database with route_id and user_id: ', this.state.pickedRouteId, this.context.user_id);
+
+    fetch(`/api/available-pairing-route-for-user/${this.context.user_id}` ,{
+      method: 'POST',
+      body: JSON.stringify({
+        route_id: this.state.pickedRouteId,
+        status: 'paired',
+      }),
+      headers:{
+        'Content-Type': 'application/json'
+      }, 
+    })
+    .then( res => {
+      console.log('Route status changed in DB');
+      const routes = this.state.routes.map(route =>{
+        if (route.id === this.state.pickedRouteId){
+          const updatedRoute = {...route};
+          updatedRoute.status = 'paired';
+          return updatedRoute
+        }
+        return route;
+      });
+      this.setState({
+        routes,
+        showModal : false,
+        pickedRouteId : null,
+  
+      },()=>console.log('updated Routes:', this.state.routes))
+    });
   }
 
   componentDidMount(prevProps, prevState){
@@ -71,7 +97,9 @@ class PairingRequest extends React.Component {
               <div>
                 Plan Walk Time: {route['plan_walk_at']}
               </div>
-              <button onClick={()=>this.chooseAWalkPlan(route.id)}>Walk This</button>            
+              {route.status ==='pairing' ?
+                <button onClick={()=>this.chooseAWalkPlan(route.id)}>Walk This</button> :
+                <Badge color="success">My Walk</Badge>}
             </div>
         )
       })
