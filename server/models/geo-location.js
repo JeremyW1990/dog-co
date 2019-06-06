@@ -22,13 +22,10 @@ module.exports = class GeoLocation {
   static deleteById(id) {}
 
   static fetchAll() {
-    return db.execute('SELECT * FROM `geo_locations` WHERE `route_id` = 2');
+    return db.execute('SELECT * FROM `geo_locations` WHERE `route_id` = 3');
   
   }
 
-  static findById(id) {
-    return db.execute('SELECT * FROM geo-locations WHERE geo_locations.id = ?', [id]);
-  }
 };
 
 // DELETE FROM `geo_locations` WHERE `route_id` = 2 

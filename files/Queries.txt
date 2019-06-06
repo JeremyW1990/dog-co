@@ -2,5 +2,8 @@ DELETE FROM `geo_locations` WHERE `route_id` = 2;
 
 UPDATE `geo_locations` SET `route_id` = 5;
 
-UPDATE `routes` SET `provider_id`= 1,`status`='paired' WHERE beneficiary_id =2
+UPDATE `routes` SET `provider_id`= 1,`status`='paired' WHERE beneficiary_id = 2
+
+DELETE FROM `geo_locations` WHERE route_id != 5;
+
 

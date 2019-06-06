@@ -21,16 +21,22 @@ exports.postGeoLocation = (req, res, next) => {
   const longitude = req.body.longitude;
   const latitude = req.body.latitude;
   const route_id = req.body.route_id;
+  const current_walk_paired_user_id = req.body.walkee_id;
   const geo_location = new GeoLocations(null, longitude, latitude, route_id, null);
+
   geo_location
   .save()
   .then((result) => {
     
+    // .to(current_walk_paired_user_id)
     console.log("new geo_location updated to mySQL: ", result);
-    io.getIO().emit('mySQL', {
+    const emitData = {
       latitude,
-      longitude
-    });
+      longitude,
+      current_walk_paired_user_id,
+    }
+    console.log("Emit data:", emitData)
+    io.getIO().emit('new-geo-location', emitData);
     res.send(result);
   })
   .catch(err => console.log("postGeoLocation controller error:" , err));

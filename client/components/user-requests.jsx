@@ -15,6 +15,7 @@ class UserRequests extends React.Component {
       request_type : 'my-walk',
       showModal: false,
       pickedRouteId : null,
+      walkee_id: null,
     };
     this.changeRequestType = this.changeRequestType.bind(this)
     this.chooseAWalkPlan = this.chooseAWalkPlan.bind(this);
@@ -29,10 +30,11 @@ class UserRequests extends React.Component {
     this.setState({request_type});
   }
 
-  chooseAWalkPlan(route_id){
+  chooseAWalkPlan(pickedRouteId, walkee_id){
     this.setState({
       showModal : true,
-      pickedRouteId : route_id
+      pickedRouteId,
+      walkee_id,
     })
   }
 
@@ -40,6 +42,7 @@ class UserRequests extends React.Component {
     this.setState({
       showModal : false,
       pickedRouteId : null,
+      walkee_id: null,
       
     })
     console.log('cancel');
@@ -58,10 +61,12 @@ class UserRequests extends React.Component {
         'Content-Type': 'application/json'
       }, 
     })
+    .then( res => res.json())
     .then( res => {
       console.log('Route status changed in DB');
-      this.props.setCurrentWalkRouteId(this.state.pickedRouteId);
-      this.props.setUserType('walker');
+      this.context.set_user_type('walker');
+      this.context.set_current_walk_paired_user_id(this.state.walkee_id);
+      this.context.set_current_walk_route_id(this.state.pickedRouteId)
       this.props.history.push('/live-walker')
     //   const routes = this.state.routes.map(route =>{
     //     if (route.id === this.state.pickedRouteId){
@@ -83,6 +88,8 @@ class UserRequests extends React.Component {
 
 
   fetchData() {
+
+
     fetch(`/api/routes/${this.context.user_id}/?request=${this.state.request_type}` ,{
       method: 'GET',
     })
@@ -126,7 +133,7 @@ class UserRequests extends React.Component {
               Create at: {route['create_at']}
             </div>
             {this.state.request_type ==='my-walk' ? 
-              <button onClick={()=>{this.chooseAWalkPlan(route.id)}}>Start this walk</button> : null
+              <button onClick={()=>{this.chooseAWalkPlan(route.id,route.walkee_id)}}>Start this walk</button> : null
             }
 
           </div>
