@@ -17,12 +17,21 @@ class HomePage extends React.Component {
                 <button>Back to login</button>
             </NavLink>
 
-            <NavLink to='/live-walking'>
+            <NavLink to='/live-walker'>
                 <div className="button">
                     <button>
                         <i className="fas fas fa-road"></i>
                     </button>
-                    LIVE WALKING
+                    LIVE Walker
+                </div>
+            </NavLink>
+
+            <NavLink to='/live-walkee'>
+                <div className="button">
+                    <button>
+                        <i className="fas fas fa-road"></i>
+                    </button>
+                    LIVE Walkee
                 </div>
             </NavLink>
 

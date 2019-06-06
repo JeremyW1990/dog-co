@@ -18,12 +18,14 @@ class App extends React.Component {
     this.state = {
       user_id : 1,
       current_walk_route_id : 0,
-      user_type: null
-      
+      current_walk_paired_user_id: 0,
+      user_type: null,
+
     };
     this.login = this.login.bind(this);
     this.set_user_type = this.set_user_type.bind(this);
     this.set_current_walk_route_id = this.set_current_walk_route_id.bind(this);
+    this.set_current_walk_paired_user_id = this.set_current_walk_paired_user_id.bind(this);
 
   }
 
@@ -39,25 +41,48 @@ class App extends React.Component {
     this.setState({current_walk_route_id})
   }
 
-  componentWillUnmount(){
-    this.set_current_walk_route_id = null;
-    this.set_user_type = null;
+  set_current_walk_paired_user_id(current_walk_paired_user_id){
+    this.setState({current_walk_paired_user_id})
   }
 
+  componentDidUpdate(){
+    console.log(this.state)
+  }
+
+  componentWillUnmount(){
+    // this.set_current_walk_route_id = null;
+    // this.set_user_type = null;
+  }
+
+
+
   render() {
+
+    const contextValue = {
+      user_id: this.state.user_id,
+      login: this.login,
+      current_walk_route_id : this.state.current_walk_route_id,
+      current_user_type: this.state.current_user_type,
+      set_user_type : this.set_user_type,
+      set_current_walk_route_id : this.set_current_walk_route_id,
+      set_current_walk_paired_user_id : this.set_current_walk_paired_user_id,
+    }
+
     return (
       <BrowserRouter>
-      <AuthContext.Provider value={{
-          user_id: this.state.user_id,
-          login: this.login
-        }}>
+
+      <AuthContext.Provider value={contextValue}>
         <div className="app">
           ROOT PAGE
 
           <Switch>
             <Route path="/home" component={HomePage}></Route>
-            <Route path="/live-walkee" component={WalkeeMap}></Route> :
-            <Route path="/live-walker" component={()=><WalkerMap route_id={this.state.current_walk_route_id}/>}></Route>
+            <Route path="/live-walkee" component={()=> <WalkeeMap />}></Route> :
+            <Route path="/live-walker" 
+              component={()=><WalkerMap 
+                walkee_id = {this.state.current_walk_paired_user_id}
+                route_id={this.state.current_walk_route_id}/>}>
+            </Route>
 
             <Route path='/user-requests' render={
               (props)=> 

@@ -23,7 +23,7 @@ module.exports = class Route {
   static fetchAllByRequestType(user_id, requestType) {//my-walk, walk-for-me
 
     if (requestType === 'my-walk'){
-      return db.execute(`SELECT R.id, U.username AS 'i-walk-for', status, create_at, start_at, complete_at 
+      return db.execute(`SELECT R.id, U.id AS 'walkee_id', U.username AS 'i-walk-for', status, create_at, start_at, complete_at 
       FROM routes AS R
       LEFT JOIN users AS U 
       ON beneficiary_id = U.id
