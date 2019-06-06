@@ -73,8 +73,8 @@ class PairingRequest extends React.Component {
   }
 
   componentDidMount(prevProps, prevState){
-    fetch(`/api/available-pairing-route-for-user/${this.context.user_id}` ,{
-        method: 'GET',
+    fetch(`/api/start_walk/${this.context.user_id}` ,{
+        method: 'POST',
       })
       .then( res => {
         return res.json();
@@ -107,7 +107,14 @@ class PairingRequest extends React.Component {
     return (
       <div className="pairing-requests">
           {routesElements}
-          <ConfirmModal confirm={this.confirmAWalkPlan} cancel={this.cancelConfirm} showModal={this.state.showModal}/>  
+          <ConfirmModal 
+            confirm={this.confirmAWalkPlan} 
+            cancel={this.cancelConfirm} 
+            showModal={this.state.showModal}
+            modalBodyContent='You sure you want to walk this schedule?'
+            confirmButtonContent='Yes, I will walk it'
+            cancelButtonContent='Let me think..'
+          />  
       </div>
 
 
