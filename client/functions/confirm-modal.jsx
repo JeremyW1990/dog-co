@@ -7,13 +7,13 @@ const ConfirmModal = (props) =>{
     return (
       <div>
         <Modal isOpen={props.showModal} >
-          <ModalHeader toggle={props.toggle}>Confirm</ModalHeader>
+          <ModalHeader >Confirm</ModalHeader>
           <ModalBody>
-            You sure you want to walk this plan?
+            {props.modalBodyContent}
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={props.confirm}>Yes, walk it</Button>{' '}
-            <Button color="secondary" onClick={props.cancel}>Think again</Button>
+            <Button color="primary" onClick={props.confirm}>{props.confirmButtonContent}</Button>{' '}
+            <Button color="secondary" onClick={props.cancel}>{props.cancelButtonContent}</Button>
           </ModalFooter>
         </Modal>
       </div>

@@ -27,7 +27,7 @@ module.exports = class Route {
       FROM routes AS R
       LEFT JOIN users AS U 
       ON beneficiary_id = U.id
-      WHERE ( provider_id = ? AND status !='completed')`, [user_id]);
+      WHERE ( provider_id = ? AND status ='paired')`, [user_id]);
     };
 
     if (requestType === 'walk-for-me'){
@@ -35,7 +35,7 @@ module.exports = class Route {
       FROM routes AS R
       LEFT JOIN users AS U 
       ON provider_id = U.id
-      WHERE ( beneficiary_id = ? AND status !='completed')`, [user_id]);
+      WHERE ( beneficiary_id = ? AND status ='paired')`, [user_id]);
     };
   }
 
