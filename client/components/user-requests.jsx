@@ -1,6 +1,8 @@
 import React from 'react';
 
 import AuthContext from '../auth-context'
+import ConfirmModal from '../functions/confirm-modal'
+
 import '../css/user-requests.css'
 
 
@@ -10,9 +12,14 @@ class UserRequests extends React.Component {
     super(props);
     this.state = {
       routes: [],
-      request_type : 'walk-for-me'
+      request_type : 'my-walk',
+      showModal: false,
+      pickedRouteId : null,
     };
     this.changeRequestType = this.changeRequestType.bind(this)
+    this.chooseAWalkPlan = this.chooseAWalkPlan.bind(this);
+    this.cancelConfirm = this.cancelConfirm.bind(this);
+    this.confirmStartWalk = this.confirmStartWalk.bind(this);
   }
 
   static contextType = AuthContext;
@@ -21,6 +28,59 @@ class UserRequests extends React.Component {
   changeRequestType(request_type){
     this.setState({request_type});
   }
+
+  chooseAWalkPlan(route_id){
+    this.setState({
+      showModal : true,
+      pickedRouteId : route_id
+    })
+  }
+
+  cancelConfirm(){
+    this.setState({
+      showModal : false,
+      pickedRouteId : null,
+      
+    })
+    console.log('cancel');
+  }
+
+  confirmStartWalk(){
+    console.log('confirmed, update to Database with route_id and user_id: ', this.state.pickedRouteId, this.context.user_id);
+
+    fetch(`/api/available-pairing-route-for-user/${this.context.user_id}` ,{
+      method: 'POST',
+      body: JSON.stringify({
+        route_id: this.state.pickedRouteId,
+        status: 'ongoing',
+      }),
+      headers:{
+        'Content-Type': 'application/json'
+      }, 
+    })
+    .then( res => {
+      console.log('Route status changed in DB');
+      this.props.setCurrentWalkRouteId(this.state.pickedRouteId);
+      this.props.setUserType('walker');
+      this.props.history.push('/live-walker')
+    //   const routes = this.state.routes.map(route =>{
+    //     if (route.id === this.state.pickedRouteId){
+    //       const updatedRoute = {...route};
+    //       updatedRoute.status = 'ongoing';
+    //       return updatedRoute
+    //     }
+    //     return route;
+    //   });
+    //   this.setState({
+    //     routes,
+    //     showModal : false,
+    //     pickedRouteId : null,
+  
+    //   },()=>console.log('updated Routes:', this.state.routes))
+    });
+  }
+
+
 
   fetchData() {
     fetch(`/api/routes/${this.context.user_id}/?request=${this.state.request_type}` ,{
@@ -65,19 +125,33 @@ class UserRequests extends React.Component {
             <div>
               Create at: {route['create_at']}
             </div>
+            {this.state.request_type ==='my-walk' ? 
+              <button onClick={()=>{this.chooseAWalkPlan(route.id)}}>Start this walk</button> : null
+            }
+
           </div>
         )
       })
     }
+
     return (
 
         <div className="user-requests">
-            <button onClick={()=>this.changeRequestType('walk-for-me')}>
-              Walk For Me
-            </button>
+            <ConfirmModal 
+              confirm={this.confirmStartWalk} 
+              cancel={this.cancelConfirm} 
+              showModal={this.state.showModal}
+              modalBodyContent='You sure you have the dog?'
+              confirmButtonContent='Yes, I have it'
+              cancelButtonContent='No, not yet'    
+            />  
             <button onClick={()=>this.changeRequestType('my-walk')}>
               My Walking
             </button>
+            <button onClick={()=>this.changeRequestType('walk-for-me')}>
+              Walk For Me
+            </button>
+
 
             {routesElements}
         </div>
