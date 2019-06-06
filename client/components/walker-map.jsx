@@ -2,6 +2,7 @@ import React from "react";
 import { geolocated } from "react-geolocated";
 
 import MapContainer from './map-container'
+import AuthContext from '../auth-context'
  
 class WalkerMap extends React.Component {
 
@@ -13,18 +14,24 @@ class WalkerMap extends React.Component {
         }
     }
 
+    static contextType = AuthContext;
+
     componentDidUpdate(prevProps){
+        if (this.props.route_id > 0 && this.props.walkee_id > 0)
         if (this.props.coords) 
             if (!prevProps.coords || 
                 (this.props.coords.latitude !== prevProps.coords.latitude || this.props.coords.longitude !== prevProps.coords.longitude)){
                     const longitude = Math.floor(this.props.coords.longitude * Math.pow(10, 7));
                     const latitude = Math.floor(this.props.coords.latitude * Math.pow(10, 7));
-                    console.log(this.props.route_id)
+                    
                     const data = {
                         longitude,
                         latitude,
-                        route_id : this.props.route_id
+                        route_id : this.props.route_id,
+                        walkee_id: this.props.walkee_id,
                     };
+                    console.log("Geo locaiton post data:",data)
+
                     fetch('/api/geo-locations', {
                         method: 'POST',
                         body: JSON.stringify(data),

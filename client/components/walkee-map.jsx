@@ -1,6 +1,8 @@
 import React from 'react';
 import openSocket from 'socket.io-client';
+
 import MapContainer from './map-container';
+import AuthContext from '../auth-context'
 import '../css/route.css'
 
 
@@ -14,6 +16,8 @@ class WalkeeMap extends React.Component {
     
     };
   }
+
+  static contextType = AuthContext;
   componentDidMount(){
     fetch('/api/geo-locations', {
       method: 'GET',
@@ -30,12 +34,17 @@ class WalkeeMap extends React.Component {
       this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)});
     });
 
+    
+    const socket = openSocket('http://localhost:3001');
+    // socket.id = this.context.user_id;
+    console.log('socket:', socket)
+    socket.on('new-geo-location', data => {
+      console.log("Socket Client received",data);
+      if (data.current_walk_paired_user_id === this.context.user_id ) {
+        let geoLocationStream = this.state.geoLocationStream.concat({lat: data.latitude / Math.pow(10, 7) , lng: data.longitude / Math.pow(10, 7) });
+        this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)})
+      }
 
-    const socket = openSocket();
-    socket.on('mySQL', data => {
-      console.log("Socket Client received");
-      let geoLocationStream = this.state.geoLocationStream.concat({lat: data.latitude / Math.pow(10, 7) , lng: data.longitude / Math.pow(10, 7) });
-      this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)})
     });
   }
 
