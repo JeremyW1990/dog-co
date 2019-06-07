@@ -36,7 +36,7 @@ class WatcherMap extends React.Component {
     });
 
     
-    const socket = openSocket('http://localhost:3001');
+    const socket = openSocket();
     // socket.id = this.context.user_id;
     console.log('socket:', socket)
     socket.on('new-geo-location', data => {
