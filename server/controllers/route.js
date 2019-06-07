@@ -1,4 +1,5 @@
 const Route = require('../models/route');
+const io = require('../socket');
 const url = require('url');
 
 exports.getRoutes = (req, res, next) => {
@@ -52,7 +53,16 @@ exports.findRouteByIdAndUpdateWithStatus = (req, res, next) => {
 
   Route.findRouteByIdAndUpdateWithStatus(req.body['route_id'], req.params.user_id,req.body['status'])
     .then( ([rows,fields]) => {
-      console.log(rows);
+      console.log("new walk status udpated, req.body", req.body);
+
+      if (req.body['status'] === 'completed') {
+        const emitData = {
+          current_walk_paired_user_id : req.body['current_walk_paired_user_id'],
+        }
+        console.log('SocketIO: informing onwer the walk is done')
+        io.getIO().emit('walk-completed', emitData);
+      }
+
       res.send(rows);
     })
     .catch( err => {

@@ -5,18 +5,63 @@ import {NavLink} from 'react-router-dom'
 
 import MapContainer from './map-container'
 import AuthContext from '../auth-context'
+import ConfirmModal from '../functions/confirm-modal'
  
 class WalkerMap extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
-            geoLocationStream : []
-
+            geoLocationStream : [],
+            showModal: false,
         }
+        this.completeWalkStart = this.completeWalkStart.bind(this);
+        this.cancelCompleteWalk = this.cancelCompleteWalk.bind(this);
+        this.completeWalkSuccess = this.completeWalkSuccess.bind(this);
     }
 
     static contextType = AuthContext;
+
+    completeWalkStart(){
+      this.setState({
+        showModal : true,
+      })
+    }
+  
+    cancelCompleteWalk(){
+      this.setState({
+        showModal : false,        
+      })
+      console.log('cancel');
+  
+    }
+  
+    completeWalkSuccess(){
+  
+      console.log('confirmed, update to Database with route_id to COMPLETE');
+  
+      const postData = {
+        route_id: this.props.route_id,
+        current_walk_paired_user_id: this.context.current_walk_paired_user_id,
+        status: 'completed',
+      }
+
+      console.log(postData);
+
+      fetch(`/api/available-pairing-route-for-user/${this.context.user_id}` ,{
+        method: 'POST',
+        body: JSON.stringify(postData),
+        headers:{
+          'Content-Type': 'application/json'
+        }, 
+      })
+      .then( res => {
+        this.context.set_user_type(null);
+        this.context.set_current_walk_paired_user_id(0);
+        this.context.set_current_walk_route_id(0);
+        this.props.history.push('/home');
+      });
+    }
 
     componentDidUpdate(prevProps){
         console.log(this.props)
@@ -49,8 +94,6 @@ class WalkerMap extends React.Component {
                         const geoLocationStream = this.state.geoLocationStream.concat({ lat: this.props.coords.latitude, lng: this.props.coords.longitude })
                         this.setState({ geoLocationStream }
                         , ()=>{console.log(" State changed: ", this.state.geoLocationStream)});
-    
-                    
                     })
 
         }   
@@ -78,6 +121,15 @@ class WalkerMap extends React.Component {
 
         return (
             <React.Fragment>
+                <ConfirmModal 
+                    confirm={this.completeWalkSuccess} 
+                    cancel={this.cancelCompleteWalk} 
+                    showModal={this.state.showModal}
+                    modalBodyContent='You want to end this walk now?'
+                    confirmButtonContent='Yes'
+                    cancelButtonContent='No, I want to walk more with this puppy.'
+                />  
+            <button onClick={this.completeWalkStart}>COMPLETE</button>
             <NavLink to='/home'>
                 <button>Back</button>
             </NavLink>
