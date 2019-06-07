@@ -1,5 +1,7 @@
 import React from "react";
 import { geolocated } from "react-geolocated";
+import {NavLink} from 'react-router-dom'
+
 
 import MapContainer from './map-container'
 import AuthContext from '../auth-context'
@@ -17,6 +19,7 @@ class WalkerMap extends React.Component {
     static contextType = AuthContext;
 
     componentDidUpdate(prevProps){
+        console.log(this.props)
         if (this.props.route_id > 0 && this.props.walkee_id > 0)
         if (this.props.coords) 
             if (!prevProps.coords || 
@@ -73,7 +76,14 @@ class WalkerMap extends React.Component {
             liveMapDOM = <div>Getting the location data&hellip; </div>
         }
 
-        return liveMapDOM;
+        return (
+            <React.Fragment>
+            <NavLink to='/home'>
+                <button>Back</button>
+            </NavLink>
+            {liveMapDOM}
+            </React.Fragment>
+        );
     }
 }
  

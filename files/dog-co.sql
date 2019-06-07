@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: 2019-06-04 12:57:46
+-- Generation Time: 2019-06-06 17:42:54
 -- 服务器版本： 5.7.26-0ubuntu0.18.04.1
 -- PHP Version: 7.2.17-0ubuntu0.18.04.1
 
@@ -81,20 +81,17 @@ CREATE TABLE `routes` (
   `provider_id` mediumint(9) UNSIGNED DEFAULT NULL,
   `status` enum('pairing','ongoing','completed','paired') COLLATE utf8_unicode_ci NOT NULL,
   `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `plan_walk_at` datetime DEFAULT NULL,
   `start_at` datetime DEFAULT NULL,
-  `complete_at` datetime DEFAULT CURRENT_TIMESTAMP
+  `complete_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- 转存表中的数据 `routes`
 --
 
-INSERT INTO `routes` (`id`, `beneficiary_id`, `provider_id`, `status`, `create_at`, `start_at`, `complete_at`) VALUES
-(1, 1, NULL, 'pairing', '2019-06-03 18:05:03', NULL, NULL),
-(2, 1, 2, 'paired', '2019-06-03 18:05:03', NULL, NULL),
-(3, 2, NULL, 'pairing', '2019-06-03 18:05:03', NULL, NULL),
-(4, 2, 1, 'paired', '2019-06-03 18:05:03', NULL, NULL),
-(5, 1, 2, 'completed', '2019-06-03 18:05:03', '2019-06-03 18:05:10', '2019-06-03 18:06:04');
+INSERT INTO `routes` (`id`, `beneficiary_id`, `provider_id`, `status`, `create_at`, `plan_walk_at`, `start_at`, `complete_at`) VALUES
+(5, 1, 2, 'completed', '2019-06-03 18:05:03', NULL, '2019-06-03 18:05:10', '2019-06-03 18:06:04');
 
 -- --------------------------------------------------------
 
@@ -164,12 +161,12 @@ ALTER TABLE `dogs`
 -- 使用表AUTO_INCREMENT `geo_locations`
 --
 ALTER TABLE `geo_locations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 --
 -- 使用表AUTO_INCREMENT `routes`
 --
 ALTER TABLE `routes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- 使用表AUTO_INCREMENT `users`
 --

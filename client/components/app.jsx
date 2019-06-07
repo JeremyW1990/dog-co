@@ -5,7 +5,7 @@ import HomePage from './home-page'
 import LandingPage from './landing-page'
 import AuthContext from '../auth-context'
 import WalkerMap from './walker-map'
-import WalkeeMap from './walkee-map'
+import WatcherMap from './watcher-map'
 import UserRequests from './user-requests'
 import RequestForm from './request-form'
 import PairingRequests from './pairing-requests'
@@ -77,7 +77,7 @@ class App extends React.Component {
 
           <Switch>
             <Route path="/home" component={HomePage}></Route>
-            <Route path="/live-walkee" component={()=> <WalkeeMap />}></Route> :
+            <Route path="/live-watch" component={()=> <WatcherMap />}></Route> :
             <Route path="/live-walker" 
               component={()=><WalkerMap 
                 walkee_id = {this.state.current_walk_paired_user_id}

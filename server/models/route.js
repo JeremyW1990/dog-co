@@ -21,7 +21,7 @@ module.exports = class Route {
   static deleteById(id) {}
 
   static fetchAllByRequestType(user_id, requestType) {//my-walk, walk-for-me
-
+    console.log(user_id, requestType);
     if (requestType === 'my-walk'){
       return db.execute(`SELECT R.id, U.id AS 'walkee_id', U.username AS 'i-walk-for', status, create_at, start_at, complete_at 
       FROM routes AS R
@@ -35,7 +35,7 @@ module.exports = class Route {
       FROM routes AS R
       LEFT JOIN users AS U 
       ON provider_id = U.id
-      WHERE ( beneficiary_id = ? AND status ='paired')`, [user_id]);
+      WHERE ( beneficiary_id = ? AND (status ='paired' OR status ='pairing'))`,[user_id]);
     };
   }
 
