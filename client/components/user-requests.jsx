@@ -1,4 +1,6 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom'
+
 
 import AuthContext from '../auth-context'
 import ConfirmModal from '../functions/confirm-modal'
@@ -88,8 +90,6 @@ class UserRequests extends React.Component {
 
 
   fetchData() {
-
-
     fetch(`/api/routes/${this.context.user_id}/?request=${this.state.request_type}` ,{
       method: 'GET',
     })
@@ -144,6 +144,7 @@ class UserRequests extends React.Component {
     return (
 
         <div className="user-requests">
+
             <ConfirmModal 
               confirm={this.confirmStartWalk} 
               cancel={this.cancelConfirm} 
@@ -158,6 +159,10 @@ class UserRequests extends React.Component {
             <button onClick={()=>this.changeRequestType('walk-for-me')}>
               Walk For Me
             </button>
+
+            <NavLink to='/home'>
+                <button>Back</button>
+            </NavLink>
 
 
             {routesElements}

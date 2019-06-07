@@ -26,12 +26,12 @@ class HomePage extends React.Component {
                 </div>
             </NavLink>
 
-            <NavLink to='/live-walkee'>
+            <NavLink to='/live-watch'>
                 <div className="button">
                     <button>
                         <i className="fas fas fa-road"></i>
                     </button>
-                    LIVE Walkee
+                    LIVE Watch
                 </div>
             </NavLink>
 
