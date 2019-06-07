@@ -13,7 +13,7 @@ const ConfirmModal = (props) =>{
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={props.confirm}>{props.confirmButtonContent}</Button>{' '}
-            <Button color="secondary" onClick={props.cancel}>{props.cancelButtonContent}</Button>
+            {props.cancel ? <Button color="secondary" onClick={props.cancel}>{props.cancelButtonContent}</Button> : null}
           </ModalFooter>
         </Modal>
       </div>

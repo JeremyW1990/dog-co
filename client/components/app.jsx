@@ -20,7 +20,6 @@ class App extends React.Component {
       current_walk_route_id : 0,
       current_walk_paired_user_id: 0,
       user_type: null,
-
     };
     this.login = this.login.bind(this);
     this.set_user_type = this.set_user_type.bind(this);
@@ -45,15 +44,14 @@ class App extends React.Component {
     this.setState({current_walk_paired_user_id})
   }
 
+  // shouldComponentUpdate(){
+  //   console.log('shouldComponentUpdate')
+  //   console.log(this.watcherMapElementRef.current)
+  //   return !this.watcherMapElementRef.current
+  // }
   componentDidUpdate(){
     console.log(this.state)
   }
-
-  componentWillUnmount(){
-    // this.set_current_walk_route_id = null;
-    // this.set_user_type = null;
-  }
-
 
 
   render() {
@@ -61,8 +59,11 @@ class App extends React.Component {
     const contextValue = {
       user_id: this.state.user_id,
       login: this.login,
+
+
       current_walk_route_id : this.state.current_walk_route_id,
       current_user_type: this.state.current_user_type,
+      current_walk_paired_user_id : this.state.current_walk_paired_user_id,
       set_user_type : this.set_user_type,
       set_current_walk_route_id : this.set_current_walk_route_id,
       set_current_walk_paired_user_id : this.set_current_walk_paired_user_id,
@@ -77,9 +78,10 @@ class App extends React.Component {
 
           <Switch>
             <Route path="/home" component={HomePage}></Route>
-            <Route path="/live-watch" component={()=> <WatcherMap />}></Route> :
+            <Route path="/live-watch" render={(props)=> <WatcherMap {...props} />}></Route> :
             <Route path="/live-walker" 
-              component={()=><WalkerMap 
+              component={(props)=><WalkerMap 
+                {...props}
                 walkee_id = {this.state.current_walk_paired_user_id}
                 route_id={this.state.current_walk_route_id}/>}>
             </Route>
