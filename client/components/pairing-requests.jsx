@@ -1,5 +1,7 @@
 import React from 'react';
 import { Badge } from 'reactstrap';
+import {NavLink} from 'react-router-dom'
+
 
 
 import AuthContext from '../auth-context'
@@ -21,6 +23,7 @@ class PairingRequest extends React.Component {
   }
 
   static contextType = AuthContext;
+
 
   chooseAWalkPlan(route_id){
     this.setState({
@@ -73,8 +76,8 @@ class PairingRequest extends React.Component {
   }
 
   componentDidMount(prevProps, prevState){
-    fetch(`/api/start_walk/${this.context.user_id}` ,{
-        method: 'POST',
+    fetch(`/api/available-pairing-route-for-user/${this.context.user_id}` ,{
+        method: 'GET',
       })
       .then( res => {
         return res.json();
@@ -106,6 +109,9 @@ class PairingRequest extends React.Component {
     }
     return (
       <div className="pairing-requests">
+        <NavLink to='/home'>
+            <button>Back</button>
+        </NavLink>
           {routesElements}
           <ConfirmModal 
             confirm={this.confirmAWalkPlan} 

@@ -1,5 +1,6 @@
 import React from 'react';
 import openSocket from 'socket.io-client';
+import {NavLink} from 'react-router-dom'
 
 import MapContainer from './map-container';
 import AuthContext from '../auth-context'
@@ -7,7 +8,7 @@ import '../css/route.css'
 
 
 
-class WalkeeMap extends React.Component {
+class WatcherMap extends React.Component {
 
   constructor(props) {
     super(props);
@@ -51,6 +52,9 @@ class WalkeeMap extends React.Component {
   render() {
     return (
       <div className="route">
+        <NavLink to='/home'>
+            <button>Back</button>
+        </NavLink>
         <div className="map">
           <MapContainer geoLocationStream={this.state.geoLocationStream} />
         </div>
@@ -59,4 +63,4 @@ class WalkeeMap extends React.Component {
   }
 }
 
-export default WalkeeMap;
+export default WatcherMap;

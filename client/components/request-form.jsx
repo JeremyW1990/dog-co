@@ -1,5 +1,7 @@
 //reference from ireactstrap form
 import React from 'react';
+import {NavLink} from 'react-router-dom'
+
 import { Form, FormGroup, Label, Input } from 'reactstrap';
 
 import AuthContext from '../auth-context'
@@ -48,6 +50,7 @@ export default class RequestForm extends React.Component {
             return res.json();
           })
         .then( res => {
+            this.props.history.push('/home');
         });
 
     }
@@ -56,6 +59,8 @@ export default class RequestForm extends React.Component {
     render() {
         const {date, time, text} = this.state;
         return (
+        <React.Fragment>
+
         <Form className="col-10 offset-1" onSubmit={this.handleSubmit}>
             <FormGroup>
                 <Label for="exampleDate">Walk Date</Label>
@@ -86,8 +91,12 @@ export default class RequestForm extends React.Component {
             </FormGroup>
 
             <input type="submit" value="Submit" />
+            <NavLink to='/home'>
+                <button>Back</button>
+            </NavLink>
 
         </Form>
+        </React.Fragment>
         );
   }
 }
