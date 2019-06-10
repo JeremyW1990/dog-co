@@ -29,6 +29,8 @@ class App extends React.Component {
 
   }
 
+
+
   login(user_id) {
     this.setState({user_id}, ()=>{
       this.setLocalStorage('user_id',user_id);
@@ -69,12 +71,15 @@ class App extends React.Component {
     const user_id_string = localStorage.getItem('user_id');
     if (user_id_string && !isNaN(user_id_string)) {
       const user_id = Number(user_id_string);
-      this.setState({user_id})
+      this.setState({user_id}, ()=>{console.log('user login in from local storage data:', user_id)})
     }
   }
 
-  componentDidMount(){
+  componentWillMount() {
     this.checkoutLocalStorage();
+  }
+
+  componentDidMount(){
   }
 
   componentDidUpdate(){
@@ -120,8 +125,7 @@ class App extends React.Component {
       
       <Route path='/walk-plan-pool' component={PairingRequests}></Route>
       <Route path="/login" component={LandingPage}></Route>
-
-
+      <Route path="/" component={HomePage}></Route>
     </Switch>)
     return (
       <BrowserRouter>
@@ -131,20 +135,16 @@ class App extends React.Component {
           ROOT PAGE
 
           <Route render={(props) =>{
-              console.log( props);
               return (this.state.user_id === 0 && props.location.pathname !=='/login') ? <Redirect to='/login' /> : null
           }}></Route>      
 
           <Route render={(props) =>{
-              console.log( props);
 
             return (this.state.user_id !== 0 && props.location.pathname ==='/login') ? <Redirect to='/home' /> : null
           }}></Route>
 
-          {this.state.user_id !== 0 ?
-             routes : 
-             <Route path="/login" component={LandingPage}></Route>
-          }
+          {this.state.user_id !== 0 ? routes : <Route path="/login" component={LandingPage}></Route>} 
+
 
 
         </div>
