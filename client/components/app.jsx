@@ -97,6 +97,32 @@ class App extends React.Component {
       set_current_walk_route_id : this.set_current_walk_route_id,
       set_current_walk_paired_user_id : this.set_current_walk_paired_user_id,
     }
+    const routes = (          
+    <Switch>
+      <Route path="/home" component={HomePage}></Route>
+      <Route path="/live-watch" render={(props)=> <WatcherMap {...props} />}></Route> :
+      <Route path="/live-walker" 
+        render={(props)=><WalkerMap 
+          {...props}
+          walkee_id = {this.state.current_walk_paired_user_id}
+          route_id={this.state.current_walk_route_id}/>}>
+      </Route>
+
+      <Route path='/user-requests' render={
+        (props)=> 
+          <UserRequests 
+          {...props}
+          setUserType={this.set_user_type} 
+          setCurrentWalkRouteId={this.set_current_walk_route_id}/>}>
+        </Route>
+
+      <Route path='/new-request' component={RequestForm}></Route>
+      
+      <Route path='/walk-plan-pool' component={PairingRequests}></Route>
+      <Route path="/login" component={LandingPage}></Route>
+
+
+    </Switch>)
     return (
       <BrowserRouter>
 
@@ -105,39 +131,22 @@ class App extends React.Component {
           ROOT PAGE
 
           <Route render={(props) =>{
+              console.log( props);
               return (this.state.user_id === 0 && props.location.pathname !=='/login') ? <Redirect to='/login' /> : null
           }}></Route>      
 
           <Route render={(props) =>{
+              console.log( props);
+
             return (this.state.user_id !== 0 && props.location.pathname ==='/login') ? <Redirect to='/home' /> : null
           }}></Route>
 
-
-          <Switch>
-            <Route path="/home" component={HomePage}></Route>
-            <Route path="/live-watch" render={(props)=> <WatcherMap {...props} />}></Route> :
-            <Route path="/live-walker" 
-              render={(props)=><WalkerMap 
-                {...props}
-                walkee_id = {this.state.current_walk_paired_user_id}
-                route_id={this.state.current_walk_route_id}/>}>
-            </Route>
-
-            <Route path='/user-requests' render={
-              (props)=> 
-                <UserRequests 
-                {...props}
-                setUserType={this.set_user_type} 
-                setCurrentWalkRouteId={this.set_current_walk_route_id}/>}>
-              </Route>
-
-            <Route path='/new-request' component={RequestForm}></Route>
-            
-            <Route path='/walk-plan-pool' component={PairingRequests}></Route>
-            <Route path="/login" component={LandingPage}></Route>
+          {this.state.user_id !== 0 ?
+             routes : 
+             <Route path="/login" component={LandingPage}></Route>
+          }
 
 
-          </Switch>
         </div>
 
       </AuthContext.Provider>
