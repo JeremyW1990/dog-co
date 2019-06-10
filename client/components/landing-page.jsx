@@ -19,13 +19,12 @@ class LandingPage extends React.Component {
     return (
         <div className="landing-page">
             Landing-Page
-            
+
             <AuthContext.Consumer>{()=> (
                 <div className="user-choice">
                     <NavLink
                         to={{
                         pathname: '/home',
-                        search: "?user_id=1"
                         }}
                         exact>
                         <button className="jeremy" onClick={()=> this.context.login(1)}>Jeremy</button>
@@ -34,7 +33,6 @@ class LandingPage extends React.Component {
                     <NavLink
                         to={{
                         pathname: '/home',
-                        search: "?user_id=2"
                         }}
                         exact>
                         <button className="howard" onClick={()=> this.context.login(2)}>Howard</button>

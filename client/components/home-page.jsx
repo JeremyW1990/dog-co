@@ -1,5 +1,7 @@
-import React from 'react';
+import React from 'react'
 import {NavLink} from 'react-router-dom'
+
+import AuthContext from '../auth-context'
 
 class HomePage extends React.Component {
 
@@ -8,14 +10,21 @@ class HomePage extends React.Component {
     this.state = {
     
     };
+    this.logout = this.logout.bind(this)
+  }
+
+  static contextType = AuthContext
+
+  logout(){
+      this.context.logout();
+      
   }
 
   render() {
     return (
         <div className="home-page">
-            <NavLink to='/'>
-                <button>Back to login</button>
-            </NavLink>
+            
+            <button onClick={this.logout}>logout</button>
 
             <NavLink to='/live-walker'>
                 <div className="button">
