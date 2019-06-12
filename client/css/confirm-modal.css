@@ -1,0 +1,13 @@
+.modal-dialog{
+    top:35%;
+}
+
+.modal-content{
+    background-color: black;
+    border: 1px solid white;
+}
+
+.btn-white {
+    color: white;
+    border-color: white
+}

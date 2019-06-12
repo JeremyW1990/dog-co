@@ -1,19 +1,20 @@
 //reference from ireactstrap form
 import React from 'react';
 import {NavLink} from 'react-router-dom'
-
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button} from 'reactstrap';
 
 import AuthContext from '../auth-context'
+import TimeTool from '../../util/time-generator'
+import '../css/request-form.css'
 
 export default class RequestForm extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
-            date: "2019-06-07",
-            time: "14:33",
-            text: "Don't walk with big dogs",
+            date: TimeTool.getDate(),
+            time: TimeTool.getCurrentTime(),
+            text: "",
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -60,8 +61,7 @@ export default class RequestForm extends React.Component {
         const {date, time, text} = this.state;
         return (
         <React.Fragment>
-
-        <Form className="col-10 offset-1" onSubmit={this.handleSubmit}>
+        <Form className="form col-10 offset-1" onSubmit={this.handleSubmit}>
             <FormGroup>
                 <Label for="exampleDate">Walk Date</Label>
                 <Input
@@ -86,13 +86,19 @@ export default class RequestForm extends React.Component {
             </FormGroup>
             <FormGroup>
                 <Label for="exampleText">A Note</Label>
-                <Input type="textarea" name="text" id="exampleText" onChange={this.handleInputChange} value={text}
-                    />
+                <Input type="textarea" 
+                    name="text" 
+                    id="exampleText" 
+                    onChange={this.handleInputChange}
+                    value={text}
+                    placeholder="Leave a message here for your walker...."
+                />
             </FormGroup>
 
-            <input type="submit" value="Submit" />
+            <Button outline className='btn-white' type="submit" value="Submit" >Submit</Button>
+            {'  '}
             <NavLink to='/home'>
-                <button>Back</button>
+                <Button  className='btn-white'>Back</Button>
             </NavLink>
 
         </Form>

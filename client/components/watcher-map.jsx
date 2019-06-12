@@ -1,12 +1,13 @@
 import React from 'react';
 import openSocket from 'socket.io-client';
 import {NavLink} from 'react-router-dom'
+import {Button} from 'reactstrap'
 
 import MapContainer from './map-container';
 import AuthContext from '../auth-context'
 import ConfirmModal from '../functions/confirm-modal'
+import '../css/watcher-map.css'
 
-import '../css/route.css'
 
 
 
@@ -88,9 +89,9 @@ class WatcherMap extends React.Component {
 
   render() {
     return (
-      <div className="route">
+      <div className="watcher-container">
         <NavLink to='/home'>
-            <button>Back</button>
+            <Button outline className='btn-white'>Back</Button>
         </NavLink>
         <ConfirmModal 
                     confirm={this.confirmModal} 
@@ -99,8 +100,11 @@ class WatcherMap extends React.Component {
                     confirmButtonContent='Noted'
                     cancelButtonContent= {null}
                 />  
-        <div className="map">
-          <MapContainer geoLocationStream={this.state.geoLocationStream} />
+        <div className="outer-map-container">
+          <div className="watcher-map">
+            <MapContainer geoLocationStream={this.state.geoLocationStream} />
+          </div>
+
         </div>
       </div>
     );

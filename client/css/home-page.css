@@ -1,0 +1,66 @@
+.home-page{
+    position: relative;
+    height: 100%;
+}
+
+.panel {
+    position: relative;
+    text-align: center;
+    height: 90%;
+}
+
+.main-button {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+}
+
+.secondary-button a {
+    color: white;
+}
+
+.secondary-button {
+    position: absolute;
+    font-size: 2rem;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: .5s ease;
+}
+
+.secondary-button.hide{
+    opacity: 0;
+    z-index: -1;
+}
+
+.secondary-button.open{
+    opacity: 1;
+    z-index: 0;
+}
+.new-requests.open{
+    top:50%;
+    left: 20%;
+
+}
+
+.walk-plan-pool.open{
+    left: 80%;
+    top:50%;
+}
+
+.user-requests.open {
+    left: 50%;
+    top:30%;
+}
+
+.live-watch.open{
+    left: 50%;
+    top:70%;
+}
+
+.button-text {
+    display: block;
+    font-size: 0.8rem;
+}

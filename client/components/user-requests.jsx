@@ -1,9 +1,11 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom'
+import {Button, Row, Container} from 'reactstrap'
 
 
 import AuthContext from '../auth-context'
 import ConfirmModal from '../functions/confirm-modal'
+import TimeTool from '../../util/time-generator'
 
 import '../css/user-requests.css'
 
@@ -68,7 +70,7 @@ class UserRequests extends React.Component {
       console.log('Route status changed in DB');
       this.context.set_user_type('walker');
       this.context.set_current_walk_paired_user_id(this.state.walkee_id);
-      this.context.set_current_walk_route_id(this.state.pickedRouteId)
+      this.context.set_current_walk_route_id(this.state.pickedRouteId);
       this.props.history.push('/live-walker')
     //   const routes = this.state.routes.map(route =>{
     //     if (route.id === this.state.pickedRouteId){
@@ -115,28 +117,36 @@ class UserRequests extends React.Component {
 
 
   render() {
-    let routesElements = null;
+    let requestListsElements = null;
     if (this.state.routes.length > 0) {
-      routesElements = this.state.routes.map(route => {
+      requestListsElements = this.state.routes.map(route => {
+        console.log(route['create_at'])
         return (
-          <div className="route-item" key={route.id}>
-            <div>
-              Status: {route.status}
-            </div>
-            <div>
-              {this.state.request_type ==='walk-for-me' ? 'Walker' : 'Owner'}
-              : 
-              {this.state.request_type ==='walk-for-me' ? route['my-walker'] : route['i-walk-for'] }
+          <Container className="request-item" key={route.id}>
+            <Row>
+              <div className="col-8">
+                <div>
+                  Status: {route.status}
+                </div>
+                <div>
+                  {this.state.request_type ==='walk-for-me' ? 'Walker' : 'Owner'}
+                  : 
+                  {this.state.request_type ==='walk-for-me' ? route['my-walker'] : route['i-walk-for'] }
 
-            </div>
-            <div>
-              Create at: {route['create_at']}
-            </div>
-            {this.state.request_type ==='my-walk' ? 
-              <button onClick={()=>{this.chooseAWalkPlan(route.id,route.walkee_id)}}>Start this walk</button> : null
-            }
+                </div>
+                <div>
+                  Create at: {TimeTool.converStringToReadableFormat(route['create_at'])}
+                </div>
 
-          </div>
+              </div>
+              <div className="col-4 right-side">
+                {this.state.request_type ==='my-walk' ? 
+                  <Button  className='btn-white' onClick={()=>{this.chooseAWalkPlan(route.id,route.walkee_id)}}>Walk Now</Button> : null
+                }
+
+              </div>
+            </Row>
+          </Container>
         )
       })
     }
@@ -153,19 +163,17 @@ class UserRequests extends React.Component {
               confirmButtonContent='Yes, I have it'
               cancelButtonContent='No, not yet'    
             />  
-            <button onClick={()=>this.changeRequestType('my-walk')}>
-              My Walking
-            </button>
-            <button onClick={()=>this.changeRequestType('walk-for-me')}>
-              Walk For Me
-            </button>
-
+            <Button outline className='btn-white' onClick={()=>this.changeRequestType('my-walk')}>
+              My Walk
+            </Button>  {'  '}
+            <Button outline className='btn-white' onClick={()=>this.changeRequestType('walk-for-me')}>
+              Walk My Dog
+            </Button>  {'  '}
             <NavLink to='/home'>
-                <button>Back</button>
+                <Button >Back</Button>
             </NavLink>
 
-
-            {routesElements}
+            {requestListsElements}
         </div>
 
 

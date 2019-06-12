@@ -1,11 +1,12 @@
 import React from 'react';
-import { Badge } from 'reactstrap';
+import { Badge, Button, Row } from 'reactstrap';
 import {NavLink} from 'react-router-dom'
 
 
-
+import TimeTool from '../../util/time-generator'
 import AuthContext from '../auth-context'
 import ConfirmModal from '../functions/confirm-modal'
+import '../css/pairing-requests.css'
 
 
 class PairingRequest extends React.Component {
@@ -89,39 +90,46 @@ class PairingRequest extends React.Component {
   }
 
   render() {
-    let routesElements = null;
+    let requestListsElements = null;
     if (this.state.routes.length > 0) {
-      routesElements = this.state.routes.map(route => {
+      requestListsElements = this.state.routes.map(route => {
         return (
-            <div className="route-item" key={route.id}>
-              <div>
-                  Owner: {route['username']}
+            <Row className="request-item" key={route.id}>
+              <div className="col-8">
+                <div >
+                    Owner: {route['username']}
+                </div>
+                <div>
+                  Plan Time: {TimeTool.converStringToReadableFormat(route['plan_walk_at'])}
+                </div>
               </div>
-              <div>
-                Plan Walk Time: {route['plan_walk_at']}
+              <div className="col-4 right-side">
+                {route.status ==='pairing' ?
+                  <Button onClick={()=>this.chooseAWalkPlan(route.id)}>Walk This</Button> :
+                  <Badge color="success">My Walk</Badge>}
+
               </div>
-              {route.status ==='pairing' ?
-                <button onClick={()=>this.chooseAWalkPlan(route.id)}>Walk This</button> :
-                <Badge color="success">My Walk</Badge>}
-            </div>
+            </Row>
         )
       })
     }
     return (
-      <div className="pairing-requests">
-        <NavLink to='/home'>
-            <button>Back</button>
-        </NavLink>
-          {routesElements}
-          <ConfirmModal 
-            confirm={this.confirmAWalkPlan} 
-            cancel={this.cancelConfirm} 
-            showModal={this.state.showModal}
-            modalBodyContent='You sure you want to walk this schedule?'
-            confirmButtonContent='Yes, I will walk it'
-            cancelButtonContent='Let me think..'
-          />  
-      </div>
+        <div className="pairing-requests">
+            <ConfirmModal 
+              confirm={this.confirmAWalkPlan} 
+              cancel={this.cancelConfirm}  
+              showModal={this.state.showModal}
+              modalBodyContent='You sure you want to walk this schedule?'
+              confirmButtonContent='Yes, I will walk it'
+              cancelButtonContent='Let me think..'
+            />  
+          <NavLink to='/home'>
+              <Button>Back</Button>
+          </NavLink>
+
+            {requestListsElements}
+
+        </div>
 
 
     );

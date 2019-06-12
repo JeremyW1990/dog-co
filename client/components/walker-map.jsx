@@ -1,11 +1,14 @@
 import React from "react";
 import { geolocated } from "react-geolocated";
 import {NavLink} from 'react-router-dom'
+import {Button} from 'reactstrap'
 
 
 import MapContainer from './map-container'
 import AuthContext from '../auth-context'
 import ConfirmModal from '../functions/confirm-modal'
+
+import '../css/walker-map.css'
  
 class WalkerMap extends React.Component {
 
@@ -113,28 +116,35 @@ class WalkerMap extends React.Component {
             console.log("STATE to render: ", this.state.geoLocationStream);
 
 
-            liveMapDOM = <MapContainer geoLocationStream={this.state.geoLocationStream} />
+            liveMapDOM = (
+                <div className="outer-map-container">
+                    <div className="walker-map">
+                        <MapContainer geoLocationStream={this.state.geoLocationStream} />
+                    </div>
+                </div>
+            )
         }
         else {
             liveMapDOM = <div>Getting the location data&hellip; </div>
         }
 
         return (
-            <React.Fragment>
+            <div className="walker-container">
+            
                 <ConfirmModal 
                     confirm={this.completeWalkSuccess} 
                     cancel={this.cancelCompleteWalk} 
                     showModal={this.state.showModal}
                     modalBodyContent='You want to end this walk now?'
                     confirmButtonContent='Yes'
-                    cancelButtonContent='No, I want to walk more with this puppy.'
+                    cancelButtonContent='Not yet'
                 />  
-            <button onClick={this.completeWalkStart}>COMPLETE</button>
+            <Button outline className='btn-white' onClick={this.completeWalkStart}>COMPLETE</Button>{'  '}
             <NavLink to='/home'>
-                <button>Back</button>
+                <Button outline>Back</Button>
             </NavLink>
             {liveMapDOM}
-            </React.Fragment>
+            </div>
         );
     }
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import {Map, GoogleApiWrapper, Polyline} from 'google-maps-react';
 
+import '../css/map-container.css'
+
 export class MapContainer extends React.Component {
 
   

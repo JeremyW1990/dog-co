@@ -1,99 +1,87 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom'
+import {NavLink as RRDNavLink} from 'react-router-dom'
 
+import Header from './header'
 import AuthContext from '../auth-context'
+import '../css/home-page.css'
+
 
 class HomePage extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-    
+        menu_spread: true,
     };
-    this.logout = this.logout.bind(this)
+    this.toggleMainMenu = this.toggleMainMenu.bind(this);
   }
 
   static contextType = AuthContext
 
-  logout(){
-      this.context.logout();
-      
+  toggleMainMenu() {
+    this.setState({
+        menu_spread: !this.state.menu_spread
+    });
   }
 
   render() {
+    let secondaryToggleClass = this.state.menu_spread ? ' open' : ' hide';
+    let mainMenu = (
+            <React.Fragment>
+
+        <div className="panel">
+            <i onClick={this.toggleMainMenu} className="main-button fas fa-paw"></i>
+
+            <div className ={'secondary-button new-requests' + secondaryToggleClass} >
+                <RRDNavLink to='/new-request'>
+
+                    <i className="fas fa-plus"></i>
+                    <span className="button-text">
+                        New Request
+                    </span>
+                </RRDNavLink>
+            </div>
+
+            <div className={"secondary-button walk-plan-pool" + secondaryToggleClass}>
+                <RRDNavLink to='/walk-plan-pool'>
+                    <i className="fas fa-user-friends"></i>
+
+                    <span className="button-text">
+                        Neighbour Requests
+                    </span>
+                    </RRDNavLink>
+            </div>
+
+            <div className={"secondary-button user-requests" + secondaryToggleClass}>
+                <RRDNavLink to='/user-requests'>
+                    <i className="fas fa-route"></i>
+
+                    <span className="button-text">
+                        My Requests
+                    </span>
+                    </RRDNavLink>
+            </div>
+
+
+            <div className={"secondary-button live-watch" + secondaryToggleClass}>
+                <RRDNavLink to='/live-watch'>
+                    <i className="fas fa-road"></i>
+                    <span className="button-text">
+                        Live-Watch
+                    </span>
+                    </RRDNavLink> 
+            </div>
+
+        </div>
+
+    </React.Fragment>
+    )
+        
+    
     return (
         <div className="home-page">
+            {mainMenu}  
             
-            <button onClick={this.logout}>logout</button>
-
-            <NavLink to='/live-walker'>
-                <div className="button">
-                    <button>
-                        <i className="fas fas fa-road"></i>
-                    </button>
-                    LIVE Walker
-                </div>
-            </NavLink>
-
-            <NavLink to='/live-watch'>
-                <div className="button">
-                    <button>
-                        <i className="fas fas fa-road"></i>
-                    </button>
-                    LIVE Watch
-                </div>
-            </NavLink>
-
-            <NavLink to='/walk-plan-pool'>
-                <div className="button">
-                    <button>
-                        <i className="fas fa-user-friends"></i>
-                    </button>
-                    Walk-Plan Pool
-                </div>
-            </NavLink>
-
-
-            <NavLink to='/user-requests'>
-                <div className="button">
-                    <button>
-                        <i className="fas fa-route"></i>
-                    </button>
-                    my request 
-                </div>
-            </NavLink>
-
-            <NavLink to='/new-request'>
-                <div className="button">
-                    <button>
-                        <i className="fas fa-plus"></i>
-                    </button>
-                    New Request
-                </div>
-            </NavLink>
-
-            
-            <div className="button">
-                <button>
-                    <i className="fas fa-folder-open"></i>
-                </button>
-                History walk
-            </div>
-            <div className="button">
-                <button>
-                    <i className="fas fa-user-cog"></i>
-                </button>
-                Edit user
-
-            </div>
-            <div className="button">
-                <button>
-                    <i className="fas fa-dog"></i>
-                </button>
-                Edit my dog
-            </div>
-            
-
         </div>
     )}
 }
