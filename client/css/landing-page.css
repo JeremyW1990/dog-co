@@ -1,0 +1,32 @@
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 100%;
+}
+
+.title {
+    font-size: 4.5rem;
+    margin-top: 50%;
+}
+
+.login-area{
+    margin-top: 60%
+}
+
+.dropdown button{
+    color: white;
+    border-color: white;
+    background-color: black;
+}
+
+.names{
+    top: 225% !important;
+    left: 50% !important;
+    transform: translate3d(-50%, -50%, 0px) !important;
+    background-color: transparent;
+}
+
+.names button{
+    color : white;
+}

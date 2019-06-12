@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
 
+import Header from './header'
 import HomePage from './home-page'
 import LandingPage from './landing-page'
 import AuthContext from '../auth-context'
@@ -9,6 +10,7 @@ import WatcherMap from './watcher-map'
 import UserRequests from './user-requests'
 import RequestForm from './request-form'
 import PairingRequests from './pairing-requests'
+import '../css/app.css'
 
 
 class App extends React.Component {
@@ -129,10 +131,9 @@ class App extends React.Component {
     </Switch>)
     return (
       <BrowserRouter>
-
       <AuthContext.Provider value={contextValue}>
         <div className="app">
-          ROOT PAGE
+        <Header></Header>
 
           <Route render={(props) =>{
               return (this.state.user_id === 0 && props.location.pathname !=='/login') ? <Redirect to='/login' /> : null

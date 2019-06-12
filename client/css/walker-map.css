@@ -1,0 +1,27 @@
+.walker-container{
+    height: 80%;
+    width: 90%;
+    margin: auto
+}
+
+.outer-map-container{
+    height: 100%;
+    position: relative;
+    border: 2px white solid;
+    border-radius: 3%;
+    margin-top: 2%;
+
+}
+.walker-map{
+    height: 96%;
+    position: absolute;
+    width: 96%;
+    top: 2%;
+    left: 2%;
+}
+
+
+.btn-white {
+    color: white;
+    border-color: white
+}

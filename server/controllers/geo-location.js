@@ -1,5 +1,4 @@
 const io = require('../socket');
-
 const GeoLocations = require('../models/geo-location');
 
 exports.getGeoLocations = (req, res, next) => {
@@ -29,15 +28,15 @@ exports.postGeoLocation = (req, res, next) => {
   .then((result) => {
     
     // .to(current_walk_paired_user_id)
-    console.log("new geo_location updated to mySQL: ", result);
-    const emitData = {
-      latitude,
-      longitude,
-      current_walk_paired_user_id,
-    }
-    console.log("Emit data:", emitData)
-    io.getIO().emit('new-geo-location', emitData);
-    res.send(result);
+      console.log("new geo_location updated to mySQL: ", result);
+      const emitData = {
+        latitude,
+        longitude,
+        current_walk_paired_user_id,
+      }
+      console.log("Emit data:", emitData)
+      io.getIO().emit('new-geo-location', emitData);
+      res.send(result);
   })
   .catch(err => console.log("postGeoLocation controller error:" , err));
 
