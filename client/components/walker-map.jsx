@@ -135,7 +135,7 @@ class WalkerMap extends React.Component {
                     confirm={this.completeWalkSuccess} 
                     cancel={this.cancelCompleteWalk} 
                     showModal={this.state.showModal}
-                    modalBodyContent='You want to end this walk now?'
+                    modalBodyContent='You want to end this walk now??'
                     confirmButtonContent='Yes'
                     cancelButtonContent='Not yet'
                 />  

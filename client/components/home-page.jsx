@@ -1,7 +1,6 @@
 import React from 'react'
 import {NavLink as RRDNavLink} from 'react-router-dom'
 
-import Header from './header'
 import AuthContext from '../auth-context'
 import '../css/home-page.css'
 
@@ -11,7 +10,8 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        menu_spread: true,
+        menu_spread: false,
+
     };
     this.toggleMainMenu = this.toggleMainMenu.bind(this);
   }
@@ -23,6 +23,7 @@ class HomePage extends React.Component {
         menu_spread: !this.state.menu_spread
     });
   }
+
 
   render() {
     let secondaryToggleClass = this.state.menu_spread ? ' open' : ' hide';
@@ -80,6 +81,7 @@ class HomePage extends React.Component {
     
     return (
         <div className="home-page">
+
             {mainMenu}  
             
         </div>

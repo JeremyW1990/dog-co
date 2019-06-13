@@ -106,7 +106,7 @@ class PairingRequest extends React.Component {
               <div className="col-4 right-side">
                 {route.status ==='pairing' ?
                   <Button onClick={()=>this.chooseAWalkPlan(route.id)}>Walk This</Button> :
-                  <Badge color="success">My Walk</Badge>}
+                  <Badge color="light">My Walk</Badge>}
 
               </div>
             </Row>

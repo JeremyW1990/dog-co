@@ -63,6 +63,15 @@ exports.findRouteByIdAndUpdateWithStatus = (req, res, next) => {
         io.getIO().emit('walk-completed', emitData);
       }
 
+      
+      if (req.body['status'] === 'on-going') {
+        const emitData = {
+          current_walk_paired_user_id : req.body['current_walk_paired_user_id'],
+        }
+        console.log('SocketIO: informing onwer the walk is starting')
+        io.getIO().emit('walk-start', emitData);
+      }
+
       res.send(rows);
     })
     .catch( err => {

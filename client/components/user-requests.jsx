@@ -120,7 +120,7 @@ class UserRequests extends React.Component {
     let requestListsElements = null;
     if (this.state.routes.length > 0) {
       requestListsElements = this.state.routes.map(route => {
-        console.log(route['create_at'])
+        console.log(route)
         return (
           <Container className="request-item" key={route.id}>
             <Row>
