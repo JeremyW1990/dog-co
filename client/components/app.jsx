@@ -1,5 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
+import openSocket from 'socket.io-client';
+
 
 import Header from './header'
 import HomePage from './home-page'
@@ -10,6 +12,8 @@ import WatcherMap from './watcher-map'
 import UserRequests from './user-requests'
 import RequestForm from './request-form'
 import PairingRequests from './pairing-requests'
+import ConfirmModal from '../functions/confirm-modal'
+
 import '../css/app.css'
 
 
@@ -22,12 +26,15 @@ class App extends React.Component {
       current_walk_route_id : 0,
       current_walk_paired_user_id: 0,
       user_type: null,
+      showModal: false,
     };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.set_user_type = this.set_user_type.bind(this);
     this.set_current_walk_route_id = this.set_current_walk_route_id.bind(this);
     this.set_current_walk_paired_user_id = this.set_current_walk_paired_user_id.bind(this);
+    this.watchTheWalk = this.watchTheWalk.bind(this);
+    this.notWatch = this.notWatch.bind(this);
 
   }
 
@@ -77,11 +84,33 @@ class App extends React.Component {
     }
   }
 
+
+
+  notWatch(){
+    this.setState({
+      showModal : false,        
+    })
+    console.log('not going to watch');
+  }
+
+  watchTheWalk(){
+    console.log('watch it');
+
+  }
+
   componentWillMount() {
     this.checkoutLocalStorage();
   }
 
   componentDidMount(){
+    // console.log(this.props)
+    // this.socket = openSocket();
+    // this.socket.on('walk-start', data => {
+    //   console.log("Socket Client received : walk-start",data);
+    //   if (data.current_walk_paired_user_id === this.user_id ) {
+    //     console.log("Walk start");
+    //   }
+    // });
   }
 
   componentDidUpdate(){
@@ -133,7 +162,9 @@ class App extends React.Component {
       <BrowserRouter>
       <AuthContext.Provider value={contextValue}>
         <div className="app">
-        <Header></Header>
+          <Header ></Header> 
+
+
 
           <Route render={(props) =>{
               return (this.state.user_id === 0 && props.location.pathname !=='/login') ? <Redirect to='/login' /> : null
