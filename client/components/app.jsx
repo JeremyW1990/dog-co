@@ -1,6 +1,5 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
-import openSocket from 'socket.io-client';
 
 
 import Header from './header'
@@ -12,8 +11,7 @@ import WatcherMap from './watcher-map'
 import UserRequests from './user-requests'
 import RequestForm from './request-form'
 import PairingRequests from './pairing-requests'
-import ConfirmModal from '../functions/confirm-modal'
-
+import ChatRoom from './chat-room'
 import '../css/app.css'
 
 
@@ -27,6 +25,7 @@ class App extends React.Component {
       current_walk_paired_user_id: 0,
       user_type: null,
       showModal: false,
+      
     };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
@@ -98,6 +97,8 @@ class App extends React.Component {
 
   }
 
+
+
   componentWillMount() {
     this.checkoutLocalStorage();
   }
@@ -135,7 +136,7 @@ class App extends React.Component {
     }
     const routes = (          
     <Switch>
-      <Route path="/home" component={HomePage}></Route>
+      <Route path="/home" render={(props)=> <HomePage toggleChatRoomDisplay = {this.toggleChatRoomDisplay} {...props}/>}></Route>
       <Route path="/live-watch" render={(props)=> <WatcherMap {...props} />}></Route> :
       <Route path="/live-walker" 
         render={(props)=><WalkerMap 
@@ -153,6 +154,14 @@ class App extends React.Component {
         </Route>
 
       <Route path='/new-request' component={RequestForm}></Route>
+
+      <Route path='/chat-room' render={
+        (props)=> 
+          <ChatRoom 
+            showChatRoom={this.state.showChatRoom}
+            toggleChatRoomDisplay = {this.toggleChatRoomDisplay}
+          />}>  
+        </Route>
       
       <Route path='/walk-plan-pool' component={PairingRequests}></Route>
       <Route path="/login" component={LandingPage}></Route>
@@ -164,8 +173,6 @@ class App extends React.Component {
         <div className="app">
           <Header ></Header> 
 
-
-
           <Route render={(props) =>{
               return (this.state.user_id === 0 && props.location.pathname !=='/login') ? <Redirect to='/login' /> : null
           }}></Route>      
@@ -176,9 +183,6 @@ class App extends React.Component {
           }}></Route>
 
           {this.state.user_id !== 0 ? routes : <Route path="/login" component={LandingPage}></Route>} 
-
-
-
         </div>
 
       </AuthContext.Provider>

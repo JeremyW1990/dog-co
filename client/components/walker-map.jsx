@@ -66,6 +66,8 @@ class WalkerMap extends React.Component {
       });
     }
 
+
+
     componentDidUpdate(prevProps){
         console.log(this.props)
         if (this.props.route_id > 0 && this.props.walkee_id > 0)
@@ -144,6 +146,8 @@ class WalkerMap extends React.Component {
                 <Button outline>Back</Button>
             </NavLink>
             {liveMapDOM}
+            <input type="text" />
+            <Button outline className='btn-white'onClick={this.sendMessage}>Send message</Button>
             </div>
         );
     }

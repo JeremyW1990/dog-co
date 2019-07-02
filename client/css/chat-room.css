@@ -1,0 +1,96 @@
+.chat-room {
+    width: 95%;
+    height: 90%;
+    margin: auto;
+    border: 1px solid white;
+    border-radius: 1%;
+}
+
+
+
+.chat-history{
+    width: 100%;
+    height: 85%;
+    overflow-y: scroll;
+}
+
+.back-button{
+    height: 5%;
+}
+
+.controls{
+    height: 10%;
+    width: 97%;
+    margin:auto;    
+}
+
+.input {
+    display: inline-block;
+    width: 80%;
+}
+
+.send-button{
+    display: inline-block;
+    width: 20%;
+}
+
+.text-area{
+    position: relative;
+    width: 50%;
+}
+
+.speech-bubble {
+    width:100%;
+    color: black;
+    position: relative;
+	background:white;
+    border-radius: .4em;
+    margin-bottom: 5%;
+    padding:2%;
+    padding-left: 4%;
+    overflow-wrap: break-word;
+}
+
+.my-text {
+    margin-left: 45%;
+}
+
+.my-text .time {
+    text-align: right;
+}
+.text-area.incoming-text {
+    margin-left: 5%;
+}
+
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	right: 1px;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 1em solid transparent;
+	border-left-color:white;
+	border-right: 0;
+	border-bottom: 0;
+	margin-top: -0.5em;
+	margin-right: -1em;
+}
+
+.incoming-text .speech-bubble:after {
+	content: '';
+	position: absolute;
+	left: 1px;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 1em solid transparent;
+	border-right-color:white;
+	border-left: 0;
+	border-top: 0;
+	margin-top: -0.5em;
+	margin-left: -1em;
+}
+
+

@@ -10,7 +10,7 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        menu_spread: false,
+        menu_spread: true,
 
     };
     this.toggleMainMenu = this.toggleMainMenu.bind(this);
@@ -70,8 +70,27 @@ class HomePage extends React.Component {
                     <span className="button-text">
                         Live-Watch
                     </span>
-                    </RRDNavLink> 
+                </RRDNavLink> 
             </div>
+
+            <div className={"secondary-button chat" + secondaryToggleClass}>
+                <RRDNavLink to='/chat-room'>
+                    <i className="fas fa-comments"></i>
+                    <span className="button-text">
+                        Chat
+                    </span>
+                </RRDNavLink> 
+            </div>
+
+            <div className={"secondary-button live-walk" + secondaryToggleClass}>
+                <RRDNavLink to='/'>
+                    <i className="fas fa-dog"></i>
+                    <span className="button-text">
+                        Live Walk
+                    </span>
+                </RRDNavLink> 
+            </div>
+            
 
         </div>
 

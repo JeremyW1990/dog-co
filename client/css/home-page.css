@@ -27,13 +27,15 @@
     top:50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: .5s ease;
+    transition: all .5s ease;
 }
 
 .secondary-button.hide{
     opacity: 0;
     z-index: -1;
 }
+
+
 
 .secondary-button.open{
     opacity: 1;
@@ -51,14 +53,27 @@
 }
 
 .user-requests.open {
-    left: 50%;
+    left: 35%;
     top:30%;
 }
 
 .live-watch.open{
-    left: 50%;
-    top:70%;
+    left: 35%;
+    top: 70%;
 }
+
+
+.chat.open{
+    left: 65%;
+    top: 30%;
+}
+
+.live-walk.open{
+    left: 65%;
+    top: 70%;   
+}
+
+
 
 .button-text {
     display: block;
