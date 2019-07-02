@@ -82,7 +82,6 @@ class WatcherMap extends React.Component {
         this.context.set_current_walk_paired_user_id(0);
         this.context.set_current_walk_route_id(0);
         this.popupModal();
-        
       }
     });
   }
@@ -91,7 +90,7 @@ class WatcherMap extends React.Component {
     return (
       <div className="watcher-container">
         <NavLink to='/home'>
-            <Button outline className='btn-white'>Back</Button>
+            <Button className='btn-white'>Back</Button>
         </NavLink>
         <ConfirmModal 
                     confirm={this.confirmModal} 

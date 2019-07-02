@@ -25,4 +25,10 @@ const server = app.listen(3001, () => {
 const io = require('./socket').init(server);
 io.on('connection', socket => {
   console.log('Client connected via Socket.IO');
+
+  socket.on('new-message', (data)=>{
+    console.log('node receives data: ', data);
+    io.sockets.emit('new-message',data);
+  })
 });
+        
