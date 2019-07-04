@@ -44,7 +44,7 @@ class WalkerMap extends React.Component {
       console.log('confirmed, update to Database with route_id to COMPLETE');
   
       const postData = {
-        route_id: this.props.route_id,
+        route_id: this.context.current_walk_route_id,
         current_walk_paired_user_id: this.context.current_walk_paired_user_id,
         status: 'completed',
       }
@@ -67,10 +67,43 @@ class WalkerMap extends React.Component {
     }
 
 
+    
+  componentDidMount(){
+
+    const postData = {
+      status: 'ongoing',
+      userType: 'walker',
+    }
+    fetch(`/api/fetch-by-status/${this.context.user_id}`, {
+        method: 'POST',
+        body: JSON.stringify(postData),
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    })
+    .then( res => {
+      return res.json();
+    })
+    .then( res => {
+      console.log('fetched geolocation of ongoing route for walker',res);
+        
+      if (res.length > 0) {
+        this.context.set_current_walk_paired_user_id(res[0].beneficiary_id);
+        this.context.set_current_walk_route_id(res[0].id);
+        this.context.set_user_type('walker');
+
+        const geoLocationStream = 
+        res.map( geo => {
+          return {lat: geo.latitude / Math.pow(10, 7) , lng: geo.longitude / Math.pow(10, 7) }
+        });
+        this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)});
+      }
+
+    })};
 
     componentDidUpdate(prevProps){
         console.log(this.props)
-        if (this.props.route_id > 0 && this.props.walkee_id > 0)
+        if (this.context.current_walk_route_id > 0 && this.context.current_walk_paired_user_id > 0)
         if (this.props.coords) 
             if (!prevProps.coords || 
                 (this.props.coords.latitude !== prevProps.coords.latitude || this.props.coords.longitude !== prevProps.coords.longitude)){
@@ -80,8 +113,8 @@ class WalkerMap extends React.Component {
                     const data = {
                         longitude,
                         latitude,
-                        route_id : this.props.route_id,
-                        walkee_id: this.props.walkee_id,
+                        route_id : this.context.current_walk_route_id,
+                        walkee_id: this.context.current_walk_paired_user_id,
                     };
                     console.log("Geo locaiton post data:",data)
 
@@ -113,6 +146,9 @@ class WalkerMap extends React.Component {
         else if (!this.props.isGeolocationEnabled){
             liveMapDOM =  <div>Geolocation is not enabled</div>;
         }
+        else if (this.state.geoLocationStream.length === 0){
+            liveMapDOM = <div className='mt-5'>You are not walking any dog at the momnent.</div>;
+        }
         else if (this.props.coords) {
             console.log("Props: ", this.props.coords);
             console.log("STATE to render: ", this.state.geoLocationStream);
@@ -141,13 +177,14 @@ class WalkerMap extends React.Component {
                     confirmButtonContent='Yes'
                     cancelButtonContent='Not yet'
                 />  
-            <Button outline className='btn-white' onClick={this.completeWalkStart}>COMPLETE</Button>{'  '}
+            {this.state.geoLocationStream.length > 0? 
+                <Button outline className='btn-white' onClick={this.completeWalkStart}>COMPLETE</Button>:null}
+            {'  '}
             <NavLink to='/home'>
-                <Button outline>Back</Button>
+                <Button className='btn-white'>Back</Button>
             </NavLink>
             {liveMapDOM}
-            <input type="text" />
-            <Button outline className='btn-white'onClick={this.sendMessage}>Send message</Button>
+
             </div>
         );
     }

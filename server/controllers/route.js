@@ -81,3 +81,19 @@ exports.findRouteByIdAndUpdateWithStatus = (req, res, next) => {
 }
 
 
+
+exports.getRoutesByStatusAndUserId = (req, res, next) => {
+  console.log("Hit getRoutesByStatusAndUserId, with user_id and Status", req.params.user_id, req.body['status'], req.body['userType']);
+
+  Route.getRoutesByStatusAndUserId(req.params.user_id, req.body['status'], req.body['userType'])
+    .then( ([rows,fields]) => {
+      console.log(rows);
+      res.send(rows);
+    })
+    .catch( err => {
+      console.log(err);
+  });
+
+}
+
+
