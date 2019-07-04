@@ -140,9 +140,7 @@ class App extends React.Component {
       <Route path="/live-watch" render={(props)=> <WatcherMap {...props} />}></Route> :
       <Route path="/live-walker" 
         render={(props)=><WalkerMap 
-          {...props}
-          walkee_id = {this.state.current_walk_paired_user_id}
-          route_id={this.state.current_walk_route_id}/>}>
+          {...props}/>}>
       </Route>
 
       <Route path='/user-requests' render={

@@ -5,15 +5,25 @@ import '../css/map-container.css'
 
 export class MapContainer extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+    };
+
+  }
   
   render() {
 
-    
-    console.log("Map-container, Path to be drawed: " , this.props.geoLocationStream);
-    const coords = {lat: 33.635094, lng: -117.740171};
-
-    return(
-      <Map 
+    let renderComponent = null;
+    if ( this.props.geoLocationStream.length === 0) {
+      renderComponent = <div>Loading...</div>
+    } 
+    else {
+      console.log("Map-container, Path to be drawed: " , this.props.geoLocationStream);
+      const coords = {lat: this.props.geoLocationStream[0].lat, lng: this.props.geoLocationStream[0].lng};
+      renderComponent = 
+        <Map 
           initialCenter={coords}
           google={this.props.google}
           style={{width: '100%', height: '100%', position: 'relative'}}
@@ -24,8 +34,11 @@ export class MapContainer extends React.Component {
             strokeColor="#0000FF"
             strokeOpacity={0.8}
             strokeWeight={2} />
-      </Map>
-    )
+        </Map>
+      
+    }
+    return (renderComponent)
+    
   }
 
       

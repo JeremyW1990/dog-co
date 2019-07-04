@@ -47,22 +47,32 @@ class WatcherMap extends React.Component {
   }
 
   componentDidMount(){
-    fetch('/api/geo-locations', {
-      method: 'GET',
-    })
-    .then( res => {
-      console.log(res);
-      return res.json();
-    })
-    .then( res => {
-      const geoLocationStream = 
-      res.map( geo => {
-        return {lat: geo.latitude / Math.pow(10, 7) , lng: geo.longitude / Math.pow(10, 7) }
-      });
-      this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)});
-    });
 
-    
+  const postData = {
+    status: 'ongoing',
+    userType: 'owner',
+  }
+  fetch(`/api/fetch-by-status/${this.context.user_id}`, {
+      method: 'POST',
+      body: JSON.stringify(postData),
+      headers:{
+          'Content-Type': 'application/json'
+      }
+  })
+  .then( res => {
+    console.log('fetched geolocation of ongoing route',res);
+    return res.json();
+  })
+  .then( res => {
+    console.log('fetched geolocation of ongoing route',res);
+
+    const geoLocationStream = 
+    res.map( geo => {
+      return {lat: geo.latitude / Math.pow(10, 7) , lng: geo.longitude / Math.pow(10, 7) }
+    });
+    this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)});
+  });
+
     this.socket = openSocket('http://localhost:3001');
     // socket.id = this.context.user_id;
     console.log('socket:', this.socket)
@@ -99,12 +109,17 @@ class WatcherMap extends React.Component {
                     confirmButtonContent='Noted'
                     cancelButtonContent= {null}
                 />  
-        <div className="outer-map-container">
-          <div className="watcher-map">
-            <MapContainer geoLocationStream={this.state.geoLocationStream} />
-          </div>
 
-        </div>
+        {this.state.geoLocationStream.length === 0 ? 
+          <div className='mt-5'>Your dog is not been walking at the momnent.</div>:
+        
+          <div className="outer-map-container">
+            <div className="watcher-map">
+              <MapContainer geoLocationStream={this.state.geoLocationStream} />
+            </div>
+
+          </div>
+        }
       </div>
     );
   }

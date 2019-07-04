@@ -51,6 +51,27 @@ module.exports = class Route {
     console.log(route_id, status);
     return db.execute(`UPDATE routes SET provider_id =?, status = ? WHERE id = ?`, [provider_id, status, route_id]);
   }
+
+  static getRoutesByStatusAndUserId(user_id, status, userType){
+    if (userType ==='owner') {
+      return db.execute(
+        `SELECT latitude, longitude, g.create_at FROM geo_locations AS g JOIN routes AS r 
+        ON r.id = g.route_id
+        WHERE r.beneficiary_id = ? AND r.status = ? ORDER BY g.create_at ASC`, 
+        [user_id, status]);
+
+    }
+
+    if (userType ==='walker') {
+      return db.execute(
+        `SELECT r.id, r.beneficiary_id, r.provider_id, latitude, longitude, g.create_at FROM geo_locations AS g JOIN routes AS r 
+        ON r.id = g.route_id
+        WHERE r.provider_id = ? AND r.status = ? ORDER BY g.create_at ASC`, 
+        [user_id, status]);
+    }
+
+
+  }
   
 
 };

@@ -10,6 +10,7 @@ body {
     font-family: 'Fredoka One', cursive;
     height: 100vh;
     background-color: black;
+    overflow-y: hidden;
 
 }
 

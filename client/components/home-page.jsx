@@ -83,7 +83,7 @@ class HomePage extends React.Component {
             </div>
 
             <div className={"secondary-button live-walk" + secondaryToggleClass}>
-                <RRDNavLink to='/'>
+                <RRDNavLink to='/live-walker'>
                     <i className="fas fa-dog"></i>
                     <span className="button-text">
                         Live Walk
