@@ -8,9 +8,6 @@ import AuthContext from '../auth-context'
 import ConfirmModal from '../functions/confirm-modal'
 import '../css/watcher-map.css'
 
-
-
-
 class WatcherMap extends React.Component {
 
   constructor(props) {

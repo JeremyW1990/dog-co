@@ -97,21 +97,12 @@ class App extends React.Component {
 
   }
 
-
-
   componentWillMount() {
     this.checkoutLocalStorage();
   }
 
   componentDidMount(){
-    // console.log(this.props)
-    // this.socket = openSocket();
-    // this.socket.on('walk-start', data => {
-    //   console.log("Socket Client received : walk-start",data);
-    //   if (data.current_walk_paired_user_id === this.user_id ) {
-    //     console.log("Walk start");
-    //   }
-    // });
+
   }
 
   componentDidUpdate(){

@@ -57,12 +57,12 @@ class Header extends React.Component {
             <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
             <Collapse isOpen={!this.state.collapsed} navbar className='z-1 right'>
                 <Nav navbar>
-                    <NavItem>
+                    {/* <NavItem>
                         <NavLink className='white' onClick={null}>
                             Setting
                         </NavLink>
                     </NavItem>
-                    <DropdownItem divider />
+                    <DropdownItem divider /> */}
                     <NavItem>
                         <NavLink className='white' onClick={this.logout}> 
                         Logout
