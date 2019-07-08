@@ -5,7 +5,6 @@ import '../css/confirm-modal.css';
 
 const ConfirmModal = (props) =>{
 
-    console.log('modal props', props)
     return (
       <div>
         <Modal isOpen={props.showModal} >

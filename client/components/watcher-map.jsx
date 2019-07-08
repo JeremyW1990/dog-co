@@ -76,17 +76,15 @@ class WatcherMap extends React.Component {
         }
     })
     .then( res => {
-      console.log('fetched geolocation of ongoing route',res);
       return res.json();
     })
     .then( res => {
-      console.log('fetched geolocation of ongoing route',res);
 
       const geoLocationStream = 
       res.map( geo => {
         return {lat: geo.latitude / Math.pow(10, 7) , lng: geo.longitude / Math.pow(10, 7) }
       });
-      this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)});
+      this.setState({ geoLocationStream });
     });
 
 
@@ -97,10 +95,9 @@ class WatcherMap extends React.Component {
     // socket.id = this.context.user_id;
     console.log('socket:', this.socket)
     this.socket.on('new-geo-location', data => {
-      console.log("Socket Client received : new-geo-location",data);
       if (data.current_walk_paired_user_id === this.context.user_id ) {
         let geoLocationStream = this.state.geoLocationStream.concat({lat: data.latitude / Math.pow(10, 7) , lng: data.longitude / Math.pow(10, 7) });
-        this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)})
+        this.setState({ geoLocationStream });
       }
     });
 
@@ -108,9 +105,7 @@ class WatcherMap extends React.Component {
       get informed by socket.IO channel as well when the walki is completed by walker
     */
     this.socket.on('walk-completed', data => {
-      console.log("Socket Client received : walk-completed",data);
       if (data.current_walk_paired_user_id === this.context.user_id ) {
-        console.log("Walk Completed");
         this.context.set_user_type(null);
         this.context.set_current_walk_paired_user_id(0);
         this.context.set_current_walk_route_id(0);
@@ -128,7 +123,7 @@ class WatcherMap extends React.Component {
     return (
       <div className="watcher-container">
         <NavLink to='/home'>
-            <Button className='btn-white'>Back</Button>
+            <Button className='btn-white mb-2'>Back</Button>
         </NavLink>
         <ConfirmModal 
                     confirm={this.confirmModal} 
