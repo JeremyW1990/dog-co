@@ -2,13 +2,14 @@ import React from 'react';
 import { Badge, Button, Row } from 'reactstrap';
 import {NavLink} from 'react-router-dom'
 
-
 import TimeTool from '../../util/time-generator'
 import AuthContext from '../auth-context'
 import ConfirmModal from '../functions/confirm-modal'
 import '../css/pairing-requests.css'
 
-
+/* 
+  This component is for rendering open walk request around neighbourhood
+*/
 class PairingRequest extends React.Component {
 
   constructor(props) {
@@ -16,6 +17,7 @@ class PairingRequest extends React.Component {
     this.state = {
       routes: [],
       showModal: false,
+      /* PickedRouteId record which route user about to confirm to pick up */
       pickedRouteId : null
     };
     this.chooseAWalkPlan = this.chooseAWalkPlan.bind(this);
@@ -26,6 +28,10 @@ class PairingRequest extends React.Component {
   static contextType = AuthContext;
 
 
+  /* 
+    update to state when an user is about to pick up a walk plan
+    A modal will pop-up to ask user to confirm
+  */
   chooseAWalkPlan(route_id){
     this.setState({
       showModal : true,
@@ -33,23 +39,31 @@ class PairingRequest extends React.Component {
     })
   }
 
+  /* 
+    update the state when user decide to not confirm to walk this plan
+    reset the pickedRouteId and make confirm modal disappear
+  */
   cancelConfirm(){
     this.setState({
       showModal : false,
       pickedRouteId : null,
       
     })
-    console.log('cancel');
 
   }
 
+  /* 
+    call endpoint when user confirm to pick up a walk plan
+  */
   confirmAWalkPlan(){
-
-    console.log('confirmed, update to Database with route_id and user_id: ', this.state.pickedRouteId, this.context.user_id);
-
+    /* Hit the end point to update the action in database */
     fetch(`/api/available-pairing-route-for-user/${this.context.user_id}` ,{
       method: 'POST',
       body: JSON.stringify({
+        /* Set up the post load here
+          state changes to 'paired'
+          and we need the id to update in the datebase
+        */
         route_id: this.state.pickedRouteId,
         status: 'paired',
       }),
@@ -58,7 +72,9 @@ class PairingRequest extends React.Component {
       }, 
     })
     .then( res => {
-      console.log('Route status changed in DB');
+      /* When update successfully in database, update according in react state as well
+        User will see the update from page
+      */
       const routes = this.state.routes.map(route =>{
         if (route.id === this.state.pickedRouteId){
           const updatedRoute = {...route};
@@ -67,16 +83,27 @@ class PairingRequest extends React.Component {
         }
         return route;
       });
+
+       /* Update the state,
+          make confirm modal disappear
+          and reset the route id 
+       */
       this.setState({
         routes,
         showModal : false,
         pickedRouteId : null,
   
-      },()=>console.log('updated Routes:', this.state.routes))
+      })
     });
   }
 
-  componentDidMount(prevProps, prevState){
+  /* 
+    When user visit this page,
+    we will get all the routes that are avaialbe for this user to pick up and display to frontend
+    We pass the current user id to backend so request of user with same id won't showup
+    User don't want to walk his own request, no business logic here for this app
+  */
+  componentDidMount(){
     fetch(`/api/available-pairing-route-for-user/${this.context.user_id}` ,{
         method: 'GET',
       })
@@ -84,13 +111,16 @@ class PairingRequest extends React.Component {
         return res.json();
       })
       .then( routes => {
-        console.log(routes);
         this.setState({routes});
       });
   }
 
   render() {
     let requestListsElements = null;
+
+    /* When no routes is in array
+      we don't render anything 
+    */
     if (this.state.routes.length > 0) {
       requestListsElements = this.state.routes.map(route => {
         return (
@@ -115,6 +145,9 @@ class PairingRequest extends React.Component {
     }
     return (
         <div className="pairing-requests">
+          {/*   
+            A modal to ask user to confirm if he really wants to pick up this walk plan
+          */}
             <ConfirmModal 
               confirm={this.confirmAWalkPlan} 
               cancel={this.cancelConfirm}  
@@ -126,8 +159,11 @@ class PairingRequest extends React.Component {
           <NavLink to='/home'>
               <Button>Back</Button>
           </NavLink>
-
-            {requestListsElements}
+          {/* 
+            render the open ruquest list for this user
+            could be nothing.
+          */}
+          {requestListsElements}
 
         </div>
 
