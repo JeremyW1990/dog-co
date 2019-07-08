@@ -169,6 +169,7 @@ npm run dev
   2. Walk history/log record. User can check his/her history as a walker or owner.
   3. Enrich walk plan type: instance, recursive, etc...
   4. Complete chat system. Let users in the neighborhood can easily find and communicate with each other.
+     Create a new table in database for chat history. Now history has not been saved to database.
   5. Fix landscape display bug.
   
 

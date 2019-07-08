@@ -7,6 +7,11 @@ import AuthContext from '../auth-context'
 import TimeTool from '../../util/time-generator'
 import '../css/request-form.css'
 
+
+/* 
+    This component is for rendering a form 
+    that user can submit a walk ruquest
+*/
 export default class RequestForm extends React.Component {
 
     constructor(props){
@@ -23,6 +28,7 @@ export default class RequestForm extends React.Component {
 
     static contextType = AuthContext;
 
+    /* udpate the value in state when user chagne the input value */
     handleInputChange(event) {
         const target = event.target;
         const value = target.value;
@@ -33,8 +39,8 @@ export default class RequestForm extends React.Component {
         });
     }
 
+    /* When user submit the form, send the request information to endpoint  */
     handleSubmit(event) {
-        console.log('The form value is' ,this.state);
         event.preventDefault();
 
         const postData = {
@@ -51,6 +57,7 @@ export default class RequestForm extends React.Component {
             return res.json();
           })
         .then( res => {
+            /* redirect to home page after user submit the request */
             this.props.history.push('/home');
         });
 
@@ -58,10 +65,15 @@ export default class RequestForm extends React.Component {
 
 
     render() {
+
+    /* Deconstructing this component and state 
+       This makes JSX neat and clean
+    */
+        const { handleSubmit, handleInputChange} = this;
         const {date, time, text} = this.state;
         return (
         <React.Fragment>
-        <Form className="form col-10 offset-1" onSubmit={this.handleSubmit}>
+        <Form className="form col-10 offset-1" onSubmit={handleSubmit}>
             <FormGroup>
                 <Label for="exampleDate">Walk Date</Label>
                 <Input
@@ -69,7 +81,7 @@ export default class RequestForm extends React.Component {
                     name="date"
                     id="exampleDate"
                     placeholder="date placeholder"
-                    onChange={this.handleInputChange} 
+                    onChange={handleInputChange} 
                     value={date}
                 />
             </FormGroup>
@@ -80,7 +92,7 @@ export default class RequestForm extends React.Component {
                     name="time"
                     id="exampleTime"
                     placeholder="time placeholder"
-                    onChange={this.handleInputChange} 
+                    onChange={handleInputChange} 
                     value={time}
                 />
             </FormGroup>
@@ -89,7 +101,7 @@ export default class RequestForm extends React.Component {
                 <Input type="textarea" 
                     name="text" 
                     id="exampleText" 
-                    onChange={this.handleInputChange}
+                    onChange={handleInputChange}
                     value={text}
                     placeholder="Leave a message here for your walker...."
                 />
