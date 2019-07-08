@@ -9,13 +9,18 @@ import TimeTool from '../../util/time-generator'
 
 import '../css/user-requests.css'
 
-
+/* 
+  This component is for rendering request under current user
+  It includes the requests that user submit
+  and the requests that user confirm to walk in the future for other users
+*/
 class UserRequests extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       routes: [],
+      /* two type of requests: 'my-walk' or 'walk-for-me' */
       request_type : 'my-walk',
       showModal: false,
       pickedRouteId : null,
@@ -30,10 +35,16 @@ class UserRequests extends React.Component {
   static contextType = AuthContext;
 
 
+  /* update state to display different request type */
   changeRequestType(request_type){
     this.setState({request_type});
   }
 
+  /* 
+    When user picked up a plan, 
+    pop-up the confirm modal asking him if he wants to walk it right now
+
+  */
   chooseAWalkPlan(pickedRouteId, walkee_id){
     this.setState({
       showModal : true,
@@ -42,6 +53,10 @@ class UserRequests extends React.Component {
     })
   }
 
+  /* 
+    Give user a chance to cancel "walk right now", if he clicks cancel button
+    confirm modal will disappear
+  */
   cancelConfirm(){
     this.setState({
       showModal : false,
@@ -49,15 +64,21 @@ class UserRequests extends React.Component {
       walkee_id: null,
       
     })
-    console.log('cancel');
   }
 
+  /* 
+    When user confirm to walk this plan right now
+    we need to update this information to backend
+
+  */
   confirmStartWalk(){
-    console.log('confirmed, update to Database with route_id and user_id: ', this.state.pickedRouteId, this.context.user_id);
 
     fetch(`/api/available-pairing-route-for-user/${this.context.user_id}` ,{
       method: 'POST',
       body: JSON.stringify({
+        /* 
+          pass the body load to backend with that route id and 'ongoing' status
+        */
         route_id: this.state.pickedRouteId,
         status: 'ongoing',
       }),
@@ -67,30 +88,27 @@ class UserRequests extends React.Component {
     })
     .then( res => res.json())
     .then( res => {
-      console.log('Route status changed in DB');
+      /* 
+        When successfully callback from database,
+        we need to update the state in app,
+        update the infomation of current ongoing route, like route_id, who is paired with this plan etc..
+        and we redirect user to the google map so we can acquire his geo location data there
+      */
       this.context.set_user_type('walker');
       this.context.set_current_walk_paired_user_id(this.state.walkee_id);
       this.context.set_current_walk_route_id(this.state.pickedRouteId);
       this.props.history.push('/live-walker')
-    //   const routes = this.state.routes.map(route =>{
-    //     if (route.id === this.state.pickedRouteId){
-    //       const updatedRoute = {...route};
-    //       updatedRoute.status = 'ongoing';
-    //       return updatedRoute
-    //     }
-    //     return route;
-    //   });
-    //   this.setState({
-    //     routes,
-    //     showModal : false,
-    //     pickedRouteId : null,
-  
-    //   },()=>console.log('updated Routes:', this.state.routes))
     });
   }
 
 
 
+  /* 
+    get the data from backend depending on the query
+    we will get two type of data:
+    1. requests user submit asking other for helping 
+    2. request user commit to help others
+  */
   fetchData() {
     fetch(`/api/routes/${this.context.user_id}/?request=${this.state.request_type}` ,{
       method: 'GET',
@@ -99,7 +117,6 @@ class UserRequests extends React.Component {
       return res.json();
     })
     .then( routes => {
-      console.log(routes);
       this.setState({routes});
     });
   }
@@ -108,6 +125,10 @@ class UserRequests extends React.Component {
       this.fetchData()
   }
 
+  /* 
+    Whenever the ruquest type changed,
+    We need to fetch another type of request data from database
+  */
   componentDidUpdate(prevProps, prevState){
     if (prevState.request_type !== this.state.request_type) {
       this.fetchData();
@@ -118,6 +139,9 @@ class UserRequests extends React.Component {
 
   render() {
     let requestListsElements = null;
+    /* 
+      render nothing when array is 0 length
+     */
     if (this.state.routes.length > 0) {
       requestListsElements = this.state.routes.map(route => {
         console.log(route)
@@ -155,6 +179,7 @@ class UserRequests extends React.Component {
 
         <div className="user-requests">
 
+          {/* A Modal to comfirm if user wants to start a walk right now  */}
             <ConfirmModal 
               confirm={this.confirmStartWalk} 
               cancel={this.cancelConfirm} 

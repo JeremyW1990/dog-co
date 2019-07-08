@@ -8,6 +8,10 @@ import AuthContext from '../auth-context'
 import ConfirmModal from '../functions/confirm-modal'
 import '../css/watcher-map.css'
 
+
+/* 
+  This app is for rendering a map for dog owner, who can watch the dog being walking outside on live
+*/
 class WatcherMap extends React.Component {
 
   constructor(props) {
@@ -25,52 +29,71 @@ class WatcherMap extends React.Component {
   static contextType = AuthContext;
 
   componentWillUnmount() {
-    console.log('unmounting....');
-    //clear sockets here
+    /* 
+        When user leave the chatroom, we disconnect the socket.IO connnection
+        to prevent memory leak 
+    */
     this.socket.close();
     
   }
 
+
+  /* 
+    A modal inform user that the walk is completed by walker 
+  */
   popupModal(){
     this.setState({
       showModal : true,
     })
   }
 
-
+  /* 
+    After owner confirm the pop-up modal, redirect him to home page
+  */
   confirmModal(){
     this.props.history.push('/home');
     
   }
 
+
   componentDidMount(){
+    /* 
+      When owner leaves and re-visit live-watch page
+      We want the user see what's the ongoing walk current status is
+      and continue to watch
+      We will call the backend to check if any one is walking for this user outside currently
+      if yes we will update the state and draw the path for this user
+    */
+    const postData = {
+      status: 'ongoing',
+      userType: 'owner',
+    }
+    fetch(`/api/fetch-by-status/${this.context.user_id}`, {
+        method: 'POST',
+        body: JSON.stringify(postData),
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    })
+    .then( res => {
+      console.log('fetched geolocation of ongoing route',res);
+      return res.json();
+    })
+    .then( res => {
+      console.log('fetched geolocation of ongoing route',res);
 
-  const postData = {
-    status: 'ongoing',
-    userType: 'owner',
-  }
-  fetch(`/api/fetch-by-status/${this.context.user_id}`, {
-      method: 'POST',
-      body: JSON.stringify(postData),
-      headers:{
-          'Content-Type': 'application/json'
-      }
-  })
-  .then( res => {
-    console.log('fetched geolocation of ongoing route',res);
-    return res.json();
-  })
-  .then( res => {
-    console.log('fetched geolocation of ongoing route',res);
-
-    const geoLocationStream = 
-    res.map( geo => {
-      return {lat: geo.latitude / Math.pow(10, 7) , lng: geo.longitude / Math.pow(10, 7) }
+      const geoLocationStream = 
+      res.map( geo => {
+        return {lat: geo.latitude / Math.pow(10, 7) , lng: geo.longitude / Math.pow(10, 7) }
+      });
+      this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)});
     });
-    this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)});
-  });
 
-    this.socket = openSocket('http://localhost:3001');
+
+    /* 
+      connect the socket.IO as well so dog owner get an constantly open channel here to get updated with geolocation
+    */
+    this.socket = openSocket(process.env.NODE_ENV ==='development' ? 'http://localhost:3001' : undefined);
     // socket.id = this.context.user_id;
     console.log('socket:', this.socket)
     this.socket.on('new-geo-location', data => {
@@ -81,6 +104,9 @@ class WatcherMap extends React.Component {
       }
     });
 
+    /* 
+      get informed by socket.IO channel as well when the walki is completed by walker
+    */
     this.socket.on('walk-completed', data => {
       console.log("Socket Client received : walk-completed",data);
       if (data.current_walk_paired_user_id === this.context.user_id ) {
@@ -94,6 +120,11 @@ class WatcherMap extends React.Component {
   }
 
   render() {
+
+    
+    /* Deconstructing this component and state 
+        This makes JSX neat and clean
+    */
     return (
       <div className="watcher-container">
         <NavLink to='/home'>

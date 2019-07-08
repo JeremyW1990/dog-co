@@ -3,18 +3,23 @@ import {Button, Input} from 'reactstrap'
 import openSocket from 'socket.io-client';
 import {NavLink} from 'react-router-dom'
 
-
-
 import AuthContext from '../auth-context'
 import '../css/chat-room.css'
 
  
+/* 
+    A simple chatroom, allowing two users communicate
+*/
 class ChatRoom extends React.Component {
 
     constructor(props){
         super(props);
         this.state = {
             chatHistory: [
+
+                /* Hardcoded chat content for demo purpose. 
+                   Will be removed when fully chatroom features implemented
+                */
                 {id:1, sender_id: 1, receiver_id: 2, message: 'Hey, Jeremy here. Just to confirm with you that u r still able to walk my dog tonight?', time: new Date().toLocaleTimeString()},
                 {id:2, sender_id: 2, reciever_id: 1, message: 'hey, Whatup,Jeremy. Yeah, stick with the schedule. I will be there at 7pm.', time: new Date().toLocaleTimeString()},
                 {id:3, sender_id: 1, reciever_id: 2, message: 'Awesome!', time: new Date().toLocaleTimeString()},
@@ -23,6 +28,8 @@ class ChatRoom extends React.Component {
                 {id:6, sender_id: 2, reciever_id: 1, message: 'Okie dokie!', time: new Date().toLocaleTimeString()},
                 
             ],
+
+            /* input field value */
             message: '',
         }
         this.socket = null;
@@ -30,10 +37,15 @@ class ChatRoom extends React.Component {
         this.changeHandler = this.changeHandler.bind(this);
     }
 
+    /* get the context here  */
     static contextType = AuthContext;
 
+    /* 
+        When user send a message, emit the message through sockiet.IO
+        the emitting load include the text, send_id, receiver_id, and timestamp information
+        and reset the message input field to empty
+    */
     sendMessage(){
-        console.log('emtting new-message')
         this.socket.emit('new-message', 
         {
             message: this.state.message,
@@ -42,15 +54,26 @@ class ChatRoom extends React.Component {
             time: new Date().toLocaleTimeString(),
         });
         this.setState({message:''})
-
     }
 
+    /* 
+        Input change filed handler
+        update the text content to state
+    */
     changeHandler(e){
         this.setState({[e.target.name]: e.target.value})
     }
 
+    /* 
+        When chatroom component is mounted, we connent the socket.IO channel here
+        Set up a 'new-message' customized event listener here. 
+        When the event is trigger, it means a new mesage is received, we update to content to state and display it
+        We don't have an endpoint to call here, so the message will not be saved in database
+        This feature will be implemented in the future.
+    */
     componentDidMount(){
-        this.socket = openSocket('http://localhost:3001');
+        this.socket = openSocket(process.env.NODE_ENV ==='development' ? 'http://localhost:3001' : undefined);
+
         this.socket.on('new-message', data => {
             console.log("Socket Client received : new-message", data);
             const chatHistory = this.state.chatHistory.concat({...data})
@@ -58,17 +81,32 @@ class ChatRoom extends React.Component {
         });
     }
 
+    componentWillUnmount() {
+        /* 
+            When user leave the chatroom, we disconnect the socket.IO connnection
+            to prevent memory leak 
+        */
+        this.socket.close();
+    }
+
     render() {
+
+        /* Deconstructing this component and state 
+           This makes JSX neat and clean
+        */
 
         const {message, chatHistory } = this.state;
         const {changeHandler, sendMessage} = this;
 
-
+        /* 
+            User map to generate jsx from raw text
+            Because text will be displayed at different places on screen depending on weather user sends it or receiveds it
+            We decide which case and attach different css to it
+        */
         const chatHistoryList = chatHistory.map((chat =>{
             if (this.context.user_id === chat.sender_id) {
                 return (
                     <div key={chat.id} className="text-area my-text">
-
                         <div className='speech-bubble'>{chat.message}</div>
                         <div className="time">{chat.time}</div>
                     </div>
@@ -82,8 +120,15 @@ class ChatRoom extends React.Component {
                     <div className="time">{chat.time}</div>
                 </div>
             )
+        
+        /* 
+            text is saved in state in chronological order,
+            we reverse here, and set the css to flex-column-reverse to reverse it back again
+            So the latest text will still be at the bottom,
+            and bottom text will be always dispalyed
+            old text will be overflowed.
+        */
         })).reverse();
-        //flex column reverse
 
         return (
 

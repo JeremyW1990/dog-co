@@ -4,13 +4,18 @@ import {NavLink as RRDNavLink} from 'react-router-dom'
 import AuthContext from '../auth-context'
 import '../css/home-page.css'
 
+/* 
+    This component is for rendering homp page
+    Home page includes the main control buttons of this app
 
+*/
 class HomePage extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-        menu_spread: true,
+        /* record the state of main menu, open or closed */
+        menu_spread: false,
 
     };
     this.toggleMainMenu = this.toggleMainMenu.bind(this);
@@ -18,6 +23,7 @@ class HomePage extends React.Component {
 
   static contextType = AuthContext
 
+  /* control the main menu to open or close */
   toggleMainMenu() {
     this.setState({
         menu_spread: !this.state.menu_spread
@@ -26,9 +32,15 @@ class HomePage extends React.Component {
 
 
   render() {
+
+    /* 
+        Render 6 main buttons here,
+        Dynamically change the css depending on open/close state
+        wrap every button with react-router NavLink so when user clicks on it, it navigates to different page
+    */
     let secondaryToggleClass = this.state.menu_spread ? ' open' : ' hide';
     let mainMenu = (
-            <React.Fragment>
+        <React.Fragment>
 
         <div className="panel">
             <i onClick={this.toggleMainMenu} className="main-button fas fa-paw"></i>
@@ -90,8 +102,6 @@ class HomePage extends React.Component {
                     </span>
                 </RRDNavLink> 
             </div>
-            
-
         </div>
 
     </React.Fragment>
