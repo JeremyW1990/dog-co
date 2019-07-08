@@ -1,16 +1,22 @@
 .walker-container{
-    height: 80%;
+    height: 90%;
     width: 90%;
     margin: auto
 }
 
-.outer-map-container{
-    height: 100%;
+
+.walker-container .outer-map-container{
+    height: 90%;
     position: relative;
     border: 2px white solid;
     border-radius: 3%;
-    margin-top: 10vh;
 
+}
+
+@media only screen and (orientation : landscape) { 
+    .walker-container .outer-map-container{
+        height: 80%;
+    }
 }
 .walker-map{
     height: 96%;

@@ -144,7 +144,6 @@ class UserRequests extends React.Component {
      */
     if (this.state.routes.length > 0) {
       requestListsElements = this.state.routes.map(route => {
-        console.log(route)
         return (
           <Container className="request-item" key={route.id}>
             <Row>

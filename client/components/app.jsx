@@ -52,7 +52,7 @@ class App extends React.Component {
   login(user_id) {
     this.setState({user_id}, ()=>{
       this.setLocalStorage('user_id',user_id);
-      console.log('login in via user_id', user_id)})
+      })
   }
 
   /* 
@@ -101,7 +101,7 @@ class App extends React.Component {
     const user_id_string = localStorage.getItem('user_id');
     if (user_id_string && !isNaN(user_id_string)) {
       const user_id = Number(user_id_string);
-      this.setState({user_id}, ()=>{console.log('user login in from local storage data:', user_id)})
+      this.setState({user_id})
     }
   }
   /* When app is open, check if user login before  */

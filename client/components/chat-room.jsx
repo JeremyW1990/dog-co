@@ -75,9 +75,8 @@ class ChatRoom extends React.Component {
         this.socket = openSocket(process.env.NODE_ENV ==='development' ? 'http://localhost:3001' : undefined);
 
         this.socket.on('new-message', data => {
-            console.log("Socket Client received : new-message", data);
             const chatHistory = this.state.chatHistory.concat({...data})
-            this.setState({ chatHistory },()=>console.log(this.state))
+            this.setState({ chatHistory });
         });
     }
 
@@ -134,7 +133,7 @@ class ChatRoom extends React.Component {
 
             <div className="chat-room" >
                 <NavLink to='/home' className="d-block m-2 back-button">
-                    <Button className='btn-white'>Back</Button>
+                    <Button className='btn-white d-block'>Back</Button>
                 </NavLink>
                 <div className="chat-history d-flex flex-column-reverse">
                     {chatHistoryList}
