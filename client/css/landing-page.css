@@ -1,0 +1,34 @@
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 90%;
+}
+
+.title {
+    position: relative;
+    font-size: 4rem;
+    top:20vh;
+}
+
+.login-area{
+    position: relative;
+    top: 30vh;
+}
+
+.dropdown button{
+    color: white;
+    border-color: white;
+    background-color: black;
+}
+
+.names{
+    top: 225% !important;
+    left: 50% !important;
+    transform: translate3d(-50%, -50%, 0px) !important;
+    background-color: transparent;
+}
+
+.names button{
+    color : white;
+}

@@ -1,0 +1,33 @@
+1. Set up the proxy between AWS server and node server
+	open dev.jeremywang.dev-le-ssl.conf under the path /etc/apache2/sites-available/
+   	comment out #DocumentRoot /var/www/dev.jeremywang.dev
+	insert three more lines below
+	  	ProxyPreserveHost On
+        	ProxyPass / http://127.0.0.1:3001/
+        	ProxyPassReverse / http://127.0.0.1:3001/
+
+2.
+  sudo a2enmod proxy_http
+  sudo service apache2 restart
+
+3. clone the project to root level
+   because the proxy setup, it doesn't need to be under dev.jeremywang.dev/dog-co anymore
+
+4. install pm2
+   sudo npm install -g pm2
+   it's a toool to keep the proxy channel up all the time 
+   alternative is nohup index.js
+   
+5. a few command to use pm2
+   pm2 start index.js
+   pm2 list
+   pm2 stop 0
+   pm2 delete 0
+   pm2 list
+   pm2 start index.js
+
+
+6. * to make the socket.io works
+    we need to change the client code whereever subscript socketio     
+    const socket = openSocket('http://localhost:3001') TO const socket = openSocket('');
+

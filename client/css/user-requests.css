@@ -1,0 +1,26 @@
+.user-requests {
+    width: 95%;
+    margin: auto;
+}
+
+.request-item {
+    margin-top: 1rem;
+    border: 2px white solid;
+    border-radius: 3%;
+    padding: 2% 2%;
+}
+
+.btn-white {
+    color: white;
+    border-color: white
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right-side button {
+    font-size:0.8rem;
+}

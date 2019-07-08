@@ -1,0 +1,33 @@
+.nav-height{
+    height: 10%;
+}
+
+.z-1 {
+    z-index: 1;
+}
+
+.logo {
+    font-size: 2rem;
+}
+
+.right {
+    text-align: right;
+}
+
+.white {
+    color: white !important;
+}
+.navbar-nav{
+    border: 1px white solid;
+    margin-left: 60%;
+    border-radius: 2%;
+}
+
+.nav-item{
+    margin-right: 10%;
+}
+
+.dropdown-divider{
+    width: 90%;
+    margin: auto;
+}

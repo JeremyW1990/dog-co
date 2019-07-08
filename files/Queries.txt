@@ -1,0 +1,12 @@
+DELETE FROM `geo_locations` WHERE `route_id` = 2;
+
+UPDATE `geo_locations` SET `route_id` = 5;
+
+UPDATE `routes` SET `provider_id`= 1,`status`='paired' WHERE beneficiary_id = 2
+
+
+DELETE FROM `routes` WHERE id!= 5;
+DELETE FROM `geo_locations` WHERE route_id != 5;
+INSERT INTO `routes` (`id`, `beneficiary_id`, `provider_id`, `status`, `create_at`, `plan_walk_at`, `start_at`, `complete_at`) VALUES (NULL, '2', '1', 'paired', CURRENT_TIMESTAMP, NULL, NULL, NULL);
+
+

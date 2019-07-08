@@ -1,0 +1,29 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+
+    color: beige;
+    font-family: 'Fredoka One', cursive;
+    height: 100vh;
+    background-color: white;
+
+    
+}
+
+#root {
+    
+    height: 100%;
+}
+
+.app {
+    margin: 0 auto;
+    max-width: 700px;
+    background-color: black;
+    height: 100%;
+}
+
