@@ -56,7 +56,6 @@ class WalkerMap extends React.Component {
     */
     completeWalkSuccess(){
   
-      console.log('confirmed, update to Database with route_id to COMPLETE');
   
       const postData = {
         route_id: this.context.current_walk_route_id,
@@ -118,7 +117,7 @@ class WalkerMap extends React.Component {
         res.map( geo => {
           return {lat: geo.latitude / Math.pow(10, 7) , lng: geo.longitude / Math.pow(10, 7) }
         });
-        this.setState({ geoLocationStream }, ()=> { console.log(this.state.geoLocationStream)});
+        this.setState({ geoLocationStream });
       }
 
     })};
@@ -148,7 +147,6 @@ class WalkerMap extends React.Component {
                         route_id : this.context.current_walk_route_id,
                         walkee_id: this.context.current_walk_paired_user_id,
                     };
-                    console.log("Geo locaiton post data:",data)
 
                     fetch('/api/geo-locations', {
                         method: 'POST',
@@ -164,15 +162,13 @@ class WalkerMap extends React.Component {
 
                       /* update the state when we know we save the geolocation in database */
                         const geoLocationStream = this.state.geoLocationStream.concat({ lat: this.props.coords.latitude, lng: this.props.coords.longitude })
-                        this.setState({ geoLocationStream }
-                        , ()=>{console.log(" State changed: ", this.state.geoLocationStream)});
+                        this.setState({ geoLocationStream });
                     })
 
         }   
     }
 
     render() {
-        console.log('rendering live map...');
 
         /* 
           Give user friendly information when brower is not supporting Geolocation
@@ -192,8 +188,6 @@ class WalkerMap extends React.Component {
             liveMapDOM = <div className='mt-5'>You are not walking any dog at the momnent.</div>;
         }
         else if (this.props.coords) {
-            console.log("Props: ", this.props.coords);
-            console.log("STATE to render: ", this.state.geoLocationStream);
 
 
             liveMapDOM = (
@@ -210,7 +204,6 @@ class WalkerMap extends React.Component {
 
         return (
             <div className="walker-container">
-            
                 <ConfirmModal 
                     confirm={this.completeWalkSuccess} 
                     cancel={this.cancelCompleteWalk} 
@@ -218,14 +211,17 @@ class WalkerMap extends React.Component {
                     modalBodyContent='You want to end this walk now??'
                     confirmButtonContent='Yes'
                     cancelButtonContent='Not yet'
-                />  
-            {this.state.geoLocationStream.length > 0? 
-                <Button outline className='btn-white' onClick={this.completeWalkStart}>COMPLETE</Button>:null}
-            {'  '}
-            <NavLink to='/home'>
-                <Button className='btn-white'>Back</Button>
-            </NavLink>
-            {liveMapDOM}
+                > </ConfirmModal> 
+              <div className="mb-2">
+                {this.state.geoLocationStream.length > 0? 
+                    <Button outline className='btn-white' onClick={this.completeWalkStart}>COMPLETE</Button>:null}
+                {'  '}
+                <NavLink to='/home'>
+                    <Button className='btn-white'>Back</Button>
+                </NavLink>
+
+              </div>
+              {liveMapDOM}
 
             </div>
         );

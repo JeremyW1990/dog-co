@@ -1,21 +1,33 @@
 .chat-room {
     width: 95%;
-    height: 90%;
+    height: 87%;
     margin: auto;
     border: 1px solid white;
     border-radius: 1%;
+}
+
+@media only screen and (orientation : landscape) { 
+    .chat-room{
+        height: 80%;
+    } 
 }
 
 
 
 .chat-history{
     width: 100%;
-    height: 85%;
+    height: 80%;
     overflow-y: scroll;
 }
 
+@media only screen and (orientation : landscape) { 
+    .chat-history{
+        height: 70%;
+    }
+}
+
 .back-button{
-    height: 5%;
+    height: 10%;
 }
 
 .controls{

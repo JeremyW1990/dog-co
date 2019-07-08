@@ -19,5 +19,4 @@ query += `( ${longitude}, ${latitude} , 1, "${create_at.getFullYear()}-${create_
 const fs = require('fs');
 fs.writeFile('files/dummy-geolocation-dummy-data.txt', query, (err) => {
     if (err) throw err;
-    console.log('files/dummy-geolocation-dummy-data.txt created.');
 });
