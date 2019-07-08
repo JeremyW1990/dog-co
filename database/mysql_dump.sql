@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: 2019-06-06 17:42:54
+-- Generation Time: 2019-07-07 19:54:49
 -- 服务器版本： 5.7.26-0ubuntu0.18.04.1
 -- PHP Version: 7.2.17-0ubuntu0.18.04.1
 
@@ -161,12 +161,12 @@ ALTER TABLE `dogs`
 -- 使用表AUTO_INCREMENT `geo_locations`
 --
 ALTER TABLE `geo_locations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 --
 -- 使用表AUTO_INCREMENT `routes`
 --
 ALTER TABLE `routes`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 --
 -- 使用表AUTO_INCREMENT `users`
 --
