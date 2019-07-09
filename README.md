@@ -87,7 +87,7 @@ Website: https://dog-co.jeremywang.dev/
 
   
 
-Incognito window will prevent local storage data from contaminating each other.
+   Incognito window will prevent local storage data from contaminating each other.
 
   
 
