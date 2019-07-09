@@ -303,9 +303,9 @@ Website: https://dog-co.jeremywang.dev/
 
   
 
-```
-git clone https://github.com/[Your_GitHub_Name]/dog-co
-```
+	```
+	git clone https://github.com/[Your_GitHub_Name]/dog-co
+	```
 
   
 
@@ -321,9 +321,9 @@ git clone https://github.com/[Your_GitHub_Name]/dog-co
 
   
 
-```
-npm install
-```
+	```
+	npm install
+	```
 
   
 
@@ -359,9 +359,9 @@ npm install
 
   
 
-```
-sudo cp /database/mysql.config.js.config /database/mysql.config.js
-```
+	```
+	sudo cp /database/mysql.config.js.config /database/mysql.config.js
+	```
 
   
 
@@ -389,9 +389,9 @@ sudo cp /database/mysql.config.js.config /database/mysql.config.js
 
   
 
-```
-sudo service apache2 start
-```
+	```
+	sudo service apache2 start
+	```
 
   
 
@@ -405,9 +405,9 @@ sudo service apache2 start
 
   
 
-```
-sudo service mysql start
-```
+	```
+	sudo service mysql start
+	```
 
   
 
@@ -417,9 +417,9 @@ sudo service mysql start
 
   
 
-```
-npm run dev
-```
+	```
+	npm run dev
+	```
 
   
 
