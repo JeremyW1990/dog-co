@@ -75,15 +75,15 @@ Incognito window will prevent local storage data from contaminating each other.
 
 3. Login
 
-- Login as `Jeremy` in the first incognito window ( window 1 )
+  - Login as `Jeremy` in the first incognito window ( window 1 )
 
-  
+    
 
-- Login as `Howard` in the second incognito window ( window 2 )
+  - Login as `Howard` in the second incognito window ( window 2 )
 
-  
+    
 
-- We strongly recommend window 2 should be on a mobile device!
+  - We strongly recommend window 2 should be on a mobile device!
 
   
 
@@ -93,17 +93,17 @@ Incognito window will prevent local storage data from contaminating each other.
 
   
 
-- Click the white dog paw in the middle of the screen, the main menu panel will be displayed
+  - Click the white dog paw in the middle of the screen, the main menu panel will be displayed
 
-  
+    
 
-- Click `New Request` button on the left, when new walk plan form will be displayed
+  - Click `New Request` button on the left, when new walk plan form will be displayed
 
-- Set up the `Walk Date` and `Walk Time`, leave `A Note` as well if you want
+  - Set up the `Walk Date` and `Walk Time`, leave `A Note` as well if you want
 
-  
+    
 
--  `Submit` the form
+  -  `Submit` the form
 
   
 
@@ -113,19 +113,19 @@ Incognito window will prevent local storage data from contaminating each other.
 
   
 
-- Click `My Requests` in the main menu
+  - Click `My Requests` in the main menu
 
-  
+    
 
-- The page will show you the walk plan under your responsibility under `My Walk`
+  - The page will show you the walk plan under your responsibility under `My Walk`
 
-  
+    
 
-- The page will also show you the walk plan you have already submit for others under `Walk My Dog`
+  - The page will also show you the walk plan you have already submit for others under `Walk My Dog`
 
-  
+    
 
-- You should find a walking plan under `Walk My Dog`, which `Status` is `pairing`. Yes, we just created this walking plan.
+  - You should find a walking plan under `Walk My Dog`, which `Status` is `pairing`. Yes, we just created this walking plan.
 
   
 
@@ -135,19 +135,19 @@ Incognito window will prevent local storage data from contaminating each other.
 
   
 
-- Click the white dog paw in the middle of the screen, the main menu panel will be displayed
+  - Click the white dog paw in the middle of the screen, the main menu panel will be displayed
 
-  
+    
 
-- Click `Neighbour Requests` on the right
+  - Click `Neighbour Requests` on the right
 
-  
+    
 
-- In the new page, you will see the pending request submitted from window 1
+  - In the new page, you will see the pending request submitted from window 1
 
-  
+    
 
-- Click `Walk This` and confirm the modal. You will see it update to `My Walk`
+  - Click `Walk This` and confirm the modal. You will see it update to `My Walk`
 
   
 
@@ -157,33 +157,33 @@ Incognito window will prevent local storage data from contaminating each other.
 
   
 
-- In window 1, at `user-requests` page, under `Walk My Dog`, you will see the `Status` becomes `paired` already. `Walker` is `Howard Moore`.
+  - In window 1, at `user-requests` page, under `Walk My Dog`, you will see the `Status` becomes `paired` already. `Walker` is `Howard Moore`.
 
-  
+    
 
-- In window 2, at `user-requests` page, under `My Walk`, you will see the `Status` becomes `paired` already. `Owner` is `Jeremy Wang`.
+  - In window 2, at `user-requests` page, under `My Walk`, you will see the `Status` becomes `paired` already. `Owner` is `Jeremy Wang`.
 
-  
+    
 
-8. Start a walk: ( operate in window 2)
+  8. Start a walk: ( operate in window 2)
 
-  
+    
 
-- Click the `Walk Now` at `user-requests` page, under `My Walk`
+  - Click the `Walk Now` at `user-requests` page, under `My Walk`
 
-- Confirm the modal to start the walk immediately
+  - Confirm the modal to start the walk immediately
 
-  
+    
 
-- The app will be redirected to a map, you walking path will be drawing on the map
+  - The app will be redirected to a map, you walking path will be drawing on the map
 
-  
+    
 
-- Hold your mobile device, have a walk around, to see what happens on the map
+  - Hold your mobile device, have a walk around, to see what happens on the map
 
-  
+    
 
-- Click `Complete` to end this walk.
+  - Click `Complete` to end this walk.
 
   
 
@@ -193,7 +193,7 @@ Incognito window will prevent local storage data from contaminating each other.
 
   
 
-- Click `Live-Watch` in the main menu, if you have a walking plan which is currently walking by others, you will see a live stream route update on the map.
+  - Click `Live-Watch` in the main menu, if you have a walking plan which is currently walking by others, you will see a live stream route update on the map.
 
   
 
@@ -224,9 +224,7 @@ Incognito window will prevent local storage data from contaminating each other.
   
 
 ```
-
 git clone https://github.com/[Your_GitHub_Name]/dog-co
-
 ```
 
   
@@ -240,9 +238,7 @@ git clone https://github.com/[Your_GitHub_Name]/dog-co
   
 
 ```
-
 npm install
-
 ```
 
   
@@ -272,7 +268,6 @@ npm install
   
 
 ```
-
 sudo cp /database/mysql.config.js.config /database/mysql.config.js
 
 ```
@@ -296,9 +291,7 @@ sudo cp /database/mysql.config.js.config /database/mysql.config.js
   
 
 ```
-
 sudo service apache2 start
-
 ```
 
   
