@@ -471,11 +471,24 @@ Website: https://dog-co.jeremywang.dev/
 
   
 
-6. Fix landscape display bug.
 
   
 
-  
+## Bugs / Clean-up
+
+1. Outsource all the side-effect calls to its centeral file.
+
+2. Outsource the SocketIO emit and listener to a centeral files.
+
+3. Fix hardcorded walk schedule time.
+
+4. Fix landscape display disorder.
+
+5. Set a center config file for walk status keyword: 'pairing', 'paired', 'ongoing', 'completed'. 
+   Now they are scattered in the whole app.
+
+6. Set an env config file for variables that should change values in different environment.
+
 
   
 
