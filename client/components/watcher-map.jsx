@@ -93,7 +93,6 @@ class WatcherMap extends React.Component {
     */
     this.socket = openSocket(process.env.NODE_ENV ==='development' ? 'http://localhost:3001' : undefined);
     // socket.id = this.context.user_id;
-    console.log('socket:', this.socket)
     this.socket.on('new-geo-location', data => {
       if (data.current_walk_paired_user_id === this.context.user_id ) {
         let geoLocationStream = this.state.geoLocationStream.concat({lat: data.latitude / Math.pow(10, 7) , lng: data.longitude / Math.pow(10, 7) });

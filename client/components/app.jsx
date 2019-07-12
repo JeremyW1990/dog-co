@@ -87,7 +87,6 @@ class App extends React.Component {
   /* clear user_id in localstorage */
   clearLocalStorage(){
     localStorage.setItem('user_id', 0);
-    console.log('local storage user_id set to 0')
 
   }
 
