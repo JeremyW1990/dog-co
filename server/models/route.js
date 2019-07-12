@@ -21,7 +21,6 @@ module.exports = class Route {
   static deleteById(id) {}
 
   static fetchAllByRequestType(user_id, requestType) {//my-walk, walk-for-me
-    console.log(user_id, requestType);
     if (requestType === 'my-walk'){
       return db.execute(`SELECT R.id, U.id AS 'walkee_id', U.username AS 'i-walk-for', status, create_at, start_at, complete_at 
       FROM routes AS R
@@ -48,7 +47,6 @@ module.exports = class Route {
   };
 
   static findRouteByIdAndUpdateWithStatus(route_id, provider_id, status){
-    console.log(route_id, status);
     return db.execute(`UPDATE routes SET provider_id =?, status = ? WHERE id = ?`, [provider_id, status, route_id]);
   }
 
